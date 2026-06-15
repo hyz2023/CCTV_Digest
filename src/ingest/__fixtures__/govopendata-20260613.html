@@ -1,0 +1,893 @@
+<!doctype html>
+<html lang="zh-Hans">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="公开数据查询平台，提供新闻联播、人民日报、参考消息、裁判文书等权威信息的实时更新和历史数据查询服务。">
+    <meta name="keywords" content="新闻联播,人民日报,参考消息,裁判文书,公开数据,数据查询">
+
+    
+<link rel="canonical" href="https://cn.govopendata.com/xinwenlianbo/20260613/">
+
+
+    
+
+    <!-- Twitter Card标签 - 优化卡片显示 -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@govopendata">
+    <meta name="twitter:creator" content="@govopendata">
+    <meta name="twitter:title" content="
+2026年6月13日新闻联播 文字版
+">
+    <meta name="twitter:description" content="
+2026年6月13日中央电视台新闻联播文字版，提供完整新闻内容、实时更新、历史查询
+">
+    <meta name="twitter:image" content="https://upload.wikimedia.org/wikipedia/zh/7/70/Xinwen_Lianbo.png">
+    <meta name="twitter:image:alt" content="公开数据查询平台logo">
+    <meta name="twitter:url" content="https://cn.govopendata.com/xinwenlianbo/20260613/">
+    
+    <!-- Open Graph 标签 (对Twitter和其他社交媒体都有效) -->
+    <meta property="og:url" content="https://cn.govopendata.com/xinwenlianbo/20260613/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="公开数据查询平台 - cn.govopendata.com" />
+    <meta property="og:description" content="公开数据查询平台，提供新闻联播、人民日报、参考消息、裁判文书等权威信息的实时更新和历史数据查询服务。" />
+    <meta property="og:image" content="https://s3.qingbuyaohaixiu.com/static/govopendata-logo.png" />
+    <meta property="og:site_name" content="公开数据查询平台" />
+    
+    <!-- 预连接关键第三方域名 - 提升性能 -->
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://s3.qingbuyaohaixiu.com">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+
+    <!-- 预加载关键字体文件 - 加速图标显示 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-solid-900.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/webfonts/fa-brands-400.woff2" as="font" type="font/woff2" crossorigin>
+
+    <!-- 全局样式加载 -->
+    <link rel="preload" href="/static/css/design-system.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/static/css/modern-ui.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/static/css/layout.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="/static/css/components.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://s3.qingbuyaohaixiu.com/static/bootstrap.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript>
+        <link rel="stylesheet" href="/static/css/design-system.min.css">
+        <link rel="stylesheet" href="/static/css/modern-ui.min.css">
+        <link rel="stylesheet" href="/static/css/layout.css">
+        <link rel="stylesheet" href="/static/css/components.css">
+        <link rel="stylesheet" href="https://s3.qingbuyaohaixiu.com/static/bootstrap.min.css">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    </noscript>
+
+    <!-- 核心JavaScript -->
+    <script type="module">
+        document.addEventListener('DOMContentLoaded', () => {
+            // 导航栏滚动效果
+            const navbar = document.querySelector('.navbar');
+            let lastScrollTop = 0;
+
+            // 优化滚动性能
+            const backToTop = document.getElementById('back-to-top');
+            let lastKnownScrollPosition = 0;
+            let ticking = false;
+
+            if (backToTop || navbar) {
+                document.addEventListener('scroll', () => {
+                    lastKnownScrollPosition = window.scrollY;
+                    if (!ticking) {
+                        window.requestAnimationFrame(() => {
+                            // 导航栏滚动效果
+                            if (navbar) {
+                                if (lastKnownScrollPosition > 50) {
+                                    navbar.classList.add('scrolled');
+                                } else {
+                                    navbar.classList.remove('scrolled');
+                                }
+                            }
+
+                            // 返回顶部按钮
+                            if (backToTop) {
+                                if (lastKnownScrollPosition > 100) {
+                                    backToTop.style.display = 'flex';
+                                    backToTop.classList.add('visible');
+                                } else {
+                                    backToTop.classList.remove('visible');
+                                    setTimeout(() => {
+                                        if (!backToTop.classList.contains('visible')) {
+                                            backToTop.style.display = 'none';
+                                        }
+                                    }, 300); // 等待过渡效果完成
+                                }
+                            }
+
+                            lastScrollTop = lastKnownScrollPosition;
+                            ticking = false;
+                        });
+                        ticking = true;
+                    }
+                }, { passive: true });
+
+                if (backToTop) {
+                    backToTop.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    });
+                }
+            }
+        });
+
+        // 简化的广告容器管理（为将来的 Google AdSense 准备）
+        // 当添加 AdSense 代码时，可以在这里添加简单的加载逻辑
+    </script>
+
+    <!-- 异步加载非关键脚本 -->
+    <!-- 先加载 Popper（Bootstrap 依赖），再加载 jQuery 与 Bootstrap，均使用 defer 以避免阻塞渲染 -->
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script defer src="https://s3.qingbuyaohaixiu.com/static/jquery.min.js"></script>
+    <script defer src="https://s3.qingbuyaohaixiu.com/static/bootstrap.min.js"></script>
+
+    <!-- 注意：安全头部应该在 nginx HTTP 响应头中设置，而不是 meta 标签 -->
+    <!-- X-Frame-Options, X-Content-Type-Options 等已在 nginx.conf 中配置 -->
+    
+<title>2026年6月13日新闻联播 文字版</title>
+
+    
+    <link rel="icon" type="image/x-icon" href="https://s3.qingbuyaohaixiu.com/static/favicon.ico">
+    
+    <!-- 结构化数据 -->
+    
+<script type="application/ld+json">
+    {
+      "@context": "http://schema.org",
+      "@type": "NewsArticle",
+      "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://cn.govopendata.com/xinwenlianbo/20260613/"
+      },
+      "headline": "2026年6月13日新闻联播完整版",
+      "image": {
+        "@type": "ImageObject",
+        "url": "https://upload.wikimedia.org/wikipedia/zh/7/70/Xinwen_Lianbo.png",
+        "height": 800,
+        "width": 800
+      },
+      "datePublished": "2026-06-13T19:00:00+08:00",
+      "dateModified": "2026-06-13T19:30:00+08:00",
+      "author": {
+        "@type": "Organization",
+        "name": "中国中央电视台",
+        "url": "https://www.cctv.com"
+      },
+      "publisher": {
+        "@type": "Organization",
+        "name": "中国中央电视台",
+        "logo": {
+          "@type": "ImageObject",
+          "url": "https://upload.wikimedia.org/wikipedia/zh/7/70/Xinwen_Lianbo.png",
+          "width": 800,
+          "height": 800
+        }
+      },
+      "description": "2026年6月13日中央电视台新闻联播文字版，提供完整新闻内容、实时更新、历史查询",
+      "articleSection": "新闻",
+      "keywords": "新闻联播,CCTV,央视新闻,2026-06-13",
+      "inLanguage": "zh-CN",
+      "isAccessibleForFree": "True",
+      "articleBody": "2026年6月13日新闻联播文字版页面摘要，收录当日 11 条新闻并支持逐条阅读与日期跳转。"
+    }
+    </script>
+
+
+    <!-- Google Analytics - 立即初始化保证统计准确性 -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-7NESVRSV0K"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-7NESVRSV0K', {
+            'anonymize_ip': true,
+            'cookie_flags': 'SameSite=None;Secure'
+        });
+    </script>
+
+    <script>
+        // Clarity延迟加载优化 - 用户交互或3秒后加载（不影响GA/AdSense）
+        (function(){
+            var clarityLoaded = false;
+            var loadClarity = function(){
+                if (clarityLoaded) return;
+                clarityLoaded = true;
+                (function(c,l,a,r,i,t,y){
+                    c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+                    t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+                    y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+                })(window, document, "clarity", "script", "8xt1bc41fx");
+            };
+
+            // 用户交互时加载
+            var events = ['scroll', 'click', 'mousemove', 'touchstart'];
+            events.forEach(function(event) {
+                window.addEventListener(event, loadClarity, {once: true, passive: true});
+            });
+
+            // 3秒后兜底加载
+            setTimeout(loadClarity, 3000);
+        })();
+    </script>
+
+    
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7793722968833990"
+crossorigin="anonymous"></script>
+
+
+
+    <script type="speculationrules">
+    {
+        "prefetch": [{
+            "where": {
+                "and": [
+                    { "href_matches": "/*" },
+                    { "not": { "href_matches": "/ads.txt" } }
+                ]
+            },
+            "eagerness": "moderate"
+        }]
+    }
+    </script>
+</head>
+
+<body data-spy="scroll" data-target="#toc"><a href="https://cn.govopendata.com/cdn-cgi/content?id=PRWhpNcECa3II884VBVza6XNEP1dDWTcF5_hvdZfQSA-1781541211.9818552-1.2.1.1-2jppXfvbXvhoIaxstgqsHfdm_5bb9CV5UKp_kha49Zs" aria-hidden="true" rel="nofollow noopener" style="display: none !important; visibility: hidden !important"></a>
+    <!-- 跳转到主要内容的链接 -->
+    <a href="#main-content" class="sr-only sr-only-focusable">跳转到主要内容</a>
+
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top" role="navigation" aria-label="主导航">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">
+                cn.govopendata.com
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarContent" aria-controls="navbarContent" aria-expanded="false" aria-label="切换导航">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/" aria-current="page">首页</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/xinwenlianbo/">新闻联播</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/renminribao/">人民日报</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/cankaoxiaoxi/">参考消息</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/caipanwenshu/">裁判文书</a>
+                    </li>
+                </ul>
+
+                
+                <form class="form-inline my-2 my-lg-0 search-form" action="https://www.google.com/search" method="get" role="search">
+                    <input type="hidden" name="as_sitesearch" value="cn.govopendata.com">
+                    <input class="form-control mr-sm-2 search-input" type="search" name="q" placeholder="搜索" aria-label="搜索网站内容">
+                    <button class="btn btn-outline-light my-2 my-sm-0" type="submit" aria-label="提交搜索">搜索</button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Google AdSense 广告位预留
+    <div class="adsense-container text-center" style="padding: 10px 0;">
+        <div class="container-fluid">
+            在这里添加 Google AdSense 代码
+        </div>
+    </div>
+    -->
+
+    <main id="main-content" class="main-content" role="main">
+        
+<div class="container-fluid detail-container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+
+            <header class="article-header">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/">首页</a></li>
+                    <li class="breadcrumb-item"><a href="/xinwenlianbo/">新闻联播</a></li>
+                    <li class="breadcrumb-item"><a href="/xinwenlianbo/2026/">2026年</a></li>
+                    <li class="breadcrumb-item"><a href="/xinwenlianbo/2026/6/">6月</a></li>
+                    <li class="breadcrumb-item active">13日</li>
+                </ol>
+                <h1 class="article-title">2026年6月13日
+                    新闻联播</h1>
+                <!-- 日期导航 -->
+                <nav class="date-navigation primary-nav" aria-label="日期导航">
+                    
+                    <a class="nav-btn nav-btn-prev" href="/xinwenlianbo/20260612/" title="2026-06-12新闻联播">
+                        <i class="fas fa-chevron-left"></i>
+                        <span class="nav-btn-label">上一天</span>
+                        <span class="nav-btn-date">2026-06-12</span>
+                    </a>
+                    
+
+                    
+                    <a class="nav-btn nav-btn-next" href="/xinwenlianbo/20260614/" title="2026-06-14新闻联播">
+                        <span class="nav-btn-label">下一天</span>
+                        <span class="nav-btn-date">2026-06-14</span>
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    
+                </nav>
+            </header>
+
+            
+            <!-- Banner广告 - 预留高度防止布局偏移 -->
+            <div class="ad-section" style="min-height: 280px;">
+                <div class="ad-container-fluid">
+                    <!-- display_horizontal_cn.govopendata.com -->
+                    <ins class="adsbygoogle" style="display:block;min-height:250px;"
+                        data-ad-client="ca-pub-7793722968833990" data-ad-slot="6910450486" data-ad-format="auto"
+                        data-full-width-responsive="true"></ins>
+                    <script>
+                        (adsbygoogle = window.adsbygoogle || []).push({});
+                    </script>
+                </div>
+            </div>
+            
+
+            <div class="row">
+                <div class="col-12 col-lg-9">
+                    <main class="article-content">
+                        
+                        <article class="content-section" id="section-7413652">
+                            <h2 class="content-heading">【新思想引领新征程】守护文化瑰宝 赓续中华文脉</h2>
+                            <div class="content-body">
+                                <p>习近平总书记指出，历史文化遗产不仅生动述说着过去，也深刻影响着当下和未来；不仅属于我们，也属于子孙后代。保护好、传承好历史文化遗产是对历史负责、对人民负责。以习近平文化思想为指引，新时代我国大力推进文化遗产系统性保护，全社会保护意识显著提升，让千年文脉焕发新生。廊桥是我国古代建筑的“活化石”。随着“廊桥保护三年行动”圆满收官，如今，风雨廊桥上一场场“透物、见人、见生活”的守护接力正在火热展开。趁着台风季来临前，浙江、福建等地正在对风雨廊桥进行全面体检；安徽、江西等地建立的廊桥“数字孪生系统”日趋完善。千年古桥从被动抢救全面迈向主动预防与系统性保护。党的十八大以来，习近平总书记站在中华民族永续发展和中华文明赓续传承的高度，对加强文化遗产保护传承作出一系列重要论述。他要求，要敬畏历史、敬畏文化、敬畏生态，全面保护好历史文化遗产。要加强非物质文化遗产保护和传承，积极培养传承人，让非物质文化遗产绽放出更加迷人的光彩。从坚持保护第一、合理利用和最小干预原则，到在保护中发展、在发展中保护的科学理念，一系列系统完整、内涵深刻的重要论述将文化遗产提升至关乎民族根魂、文明存续的空前高度，为新时代文化遗产保护工作提供了根本遵循。党的十八大以来，我国文化遗产保护实现跨越式发展。法治筑基，实现从“抢救保护”向“系统护航”的制度跨越。新修订的文物保护法正式施行；“先考古、后出让”“先调查、后建设”的保护前置制度在全国范围内落地生根；山西忻州以制定地方性法规方式保护五台山佛光寺文化景观，系统完整保护我国最古老唐代建筑的文化遗迹，日益完善的法律体系为遗产保护与管理提供了最坚实的保障。探源实证，实现从考古发掘向文明解码的认知跨越。浙江良渚、山西陶寺、河南殷墟、四川三星堆、安徽武王墩等一系列多学科考古取得重大进展，深海考古实现“零的突破”。湖北依托石家河、盘龙城等大遗址，将长江文明研究的“厚家底”转化为国家文化公园建设保护的“硬支撑”。多项中华文明探源工程项目实施，实证我国“百万年人类史、一万年文化史、五千多年文明史”。科技赋能，实现文化遗产保护与活化利用的技术跨越。在新疆克孜尔石窟，AI修复与光谱分析让1700多年前的斑驳壁画重焕生机；在苏州，新建成的国内规模最大的“丝绸纹样数据库”正将千年织锦转化为现代设计的灵感源泉。从景泰蓝制作到昆曲演艺再到传统制茶技艺，一大批饱含东方美学的非遗瑰宝与年轻一代的现代审美同频共振。在世界文化和自然双遗产地安徽黄山，通过建立数字化监测系统，让摩崖石刻、古建筑群等遗存得到全天候守护。文化瑰宝，守护未有穷期；千年文脉，传承生生不息。目前，我国世界遗产总数60项，居世界前列；列入联合国教科文组织非遗名录的项目45个，居世界第一。“十五五”时期，我国将推动文化遗产迈向系统性保护和统一监管。各类不可移动文物全面纳入法定遗产空间管控要素，坚决守住遗产空间底线。非物质文化遗产保护传承有序推进，赋能乡村振兴和经济社会发展。统筹推进五大国家文化公园的遗产要素整合，形成一张密实的文化遗产要素网络，让遗产保护成果更多、更公平地惠及全体人民。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413653">
+                            <h2 class="content-heading">第十八届海峡论坛大会在厦门举行 王沪宁出席并致辞</h2>
+                            <div class="content-body">
+                                <p>第十八届海峡论坛大会13日在厦门举行。中共中央政治局常委、全国政协主席王沪宁出席并致辞。王沪宁表示，今年4月，习近平总书记会见中国国民党主席郑丽文时发表重要讲话，为推动两岸关系和平发展、推进祖国统一大业指明了前进方向，为促进两岸交流合作、深化两岸融合发展注入了强大动力。我们始终从中华民族整体利益和长远发展把握两岸关系大局，坚持一个中国原则和“九二共识”，坚决反对“台独”分裂和外来干涉，坚定走好两岸关系和平发展道路，坚定推进祖国统一大业，守护好、建设好、发展好中华民族共同家园。王沪宁表示，中共二十届四中全会擘画了“十五五”时期发展宏伟蓝图，将为两岸关系发展开辟广阔空间。我们秉持“两岸一家亲”理念，欢迎广大台胞台企投身两岸交流合作、融合发展大潮，投身大陆高质量发展和现代化建设。两岸同胞和两岸青年要增进对中华民族、中华文化、伟大祖国的认同，增强做堂堂正正中国人的志气骨气底气，同心共创中华民族伟大复兴的美好未来。中国国民党副主席张荣恭在致辞中表示，两岸同胞同属中华民族，是同根同源、血脉相连的一家人。道道地地的台湾人，也是堂堂正正的中国人。期待进一步深化两岸交流合作，增进两岸人民福祉，共同维护台海和平，共谋中华民族伟大复兴。其他台胞代表也作了发言。大会开始前，王沪宁会见了参加论坛的台湾嘉宾代表。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        <!-- display_horizontal_cn.govopendata.com -->
+                        <div class="ad-section" style="margin: 24px 0; min-height: 120px; text-align: center;">
+                            <ins class="adsbygoogle" style="display:block"
+                                data-ad-client="ca-pub-7793722968833990" data-ad-slot="6910450486"
+                                data-ad-format="auto" data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                        
+                        
+                        <article class="content-section" id="section-7413654">
+                            <h2 class="content-heading">对不起，可能是网络原因或无此页面，请稍后尝试。</h2>
+                            <div class="content-body">
+                                <p>中国人民抗日战争的胜利是中国人民近代以来反抗外敌入侵取得的第一次完全胜利。中国共产党的中流砥柱作用是中国人民抗日战争胜利的关键。今天（6月13日）的《伟大征程》系列节目，我们一起回望那段烽火岁月。在辽宁沈阳“九·一八”历史博物馆的广场前，静静伫立的巨型纪念碑，凝固的日历上镌刻着一段刻骨铭心的历史。1931年，九一八事变爆发，日军侵占中国东北。9月20日，中共中央发表宣言，响亮提出：反对日本帝国主义强占东三省。1935年12月，长征到达陕北的中共中央召开瓦窑堡会议，制定了抗日民族统一战线的策略，得到全国各界热烈响应，唤起了中华民族的新觉醒。1936年12月，中国共产党积极促成西安事变和平解决，在民族存亡的危急关头促成国共两党的第二次合作，为全国团结抗战创造了条件。1937年7月7日，日军挑起了卢沟桥事变，抗战全面爆发。事变第二天，中国共产党向全国发出通电，号召全国人民、军队和政府团结起来，筑成民族统一战线的坚固长城，抵抗日本侵略。彼时，日军在中国大地上犯下无数灭绝人性的反人类罪行，所到之处，烧杀淫掠，无恶不作。山河破碎、脊梁挺立，风雨飘摇、力挽狂澜。面对“亡国论”和“速胜论”的喧嚣，1938年，毛泽东在延安的窑洞里写下了《论持久战》，指出：中国不能速胜，抗日战争是持久的，最后胜利属于中国。提出发动人民战争的策略，为中国抗战指明了道路。依靠人民、发动人民、为了人民。中国共产党领导抗日军民在广大地区对日军创新开展机动灵活的游击战，积小胜为大胜，逐步歼灭日军有生力量，让侵略者陷入人民战争的汪洋大海，创造了以弱胜强、全民御敌的战争奇迹。平型关大捷一举打破日军不可战胜的神话。百团大战，八路军105个团20余万人参战，共作战1800多次，歼敌2.5万人，同时牵制大量日军兵力。据统计，抗日战争中，八路军、新四军和华南抗日游击队对日作战12.5万余次，歼敌170多万。其中，歼灭日军52.7余万。东北抗日联军奋战14年，歼敌20余万。实践证明，中国共产党是领导中国人民争取民族独立和人民解放的坚强力量，是全民族抗日洪流的中流砥柱。1945年8月9日，毛泽东发表《对日寇最后一战》声明。9月2日，日本政府签署投降书，标志着中国人民抗日战争暨世界反法西斯战争的最后胜利。伟大抗战精神，是中国人民弥足珍贵的精神财富，将永远激励中国人民克服一切艰难险阻，为实现中华民族伟大复兴而奋斗。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413655">
+                            <h2 class="content-heading">我国海洋生态保护修复取得新成效</h2>
+                            <div class="content-body">
+                                <p>近年来，通过严格的排污管控、产业调整升级和海洋生态修复，我国蜿蜒漫长海岸线上呈现出“水清滩净、鱼鸥翔集、人海和谐”的美景。眼下，在海南海口湾，一场全域巡查正有序展开。工作人员采用“人工地面巡查+无人机空中航拍”的模式，对岸滩垃圾、入海排口进行“体检”，让水生态环境持续向好。我国海岸线蜿蜒漫长，分布着283个海湾。福建厦门是我国第一个全域建成美丽海湾的城市。当地正加速推进港口绿色转型，以电动船舶替代传统燃油船舶，并通过清退不规范养殖、改造岸滩，让市民漫步亲海成为日常风景。跨区域协同治理打开创建美丽海湾的新局面。深圳、香港两地为共同守护好大鹏湾，持续深化“规划协同、监测同步、治理联动、成果共享”机制，破解大鹏湾沿海滩涂跨地区治理和保护难点。此外，两地还常态化开展珊瑚保育与净滩行动，联合培育的6万余株珊瑚生长态势良好。监测数据显示，全国283个海湾中，168个海湾优良水质面积比例超过85%，117个海湾实现全域优良水质，中华白海豚、斑海豹、勺嘴鹬等珍稀物种栖息地得到有效保护。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413656">
+                            <h2 class="content-heading">多项措施促进铁路与旅游融合发展</h2>
+                            <div class="content-body">
+                                <p>记者从商务部了解到，我国将采取多项措施促进铁路与旅游融合发展。加快铁路基础设施旅游化改造，打造游客专属候车区，设置便捷换乘通道。鼓励各类社会资本参与投资旅游列车设备设施改造。到2030年，在全国范围内打造160列以上铁路旅游列车专用车组。开发具有地域文化特色的主题旅游专列，设计适合入境游客的旅游专列产品。盘活利用具有历史、文化和景观价值的铁路车站和铁路博物馆，开发铁路主题旅游线路和文创产品。强化铁路与城市公共交通、定制客运、景区专线巴士等接驳，加大热门方向旅游列车开行力度，出台梯度优惠票价政策，激发更多旅游消费潜力。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413657">
+                            <h2 class="content-heading">各地推动人才下乡 助力乡村振兴</h2>
+                            <div class="content-body">
+                                <p>乡村振兴，人才先行。“十五五”规划纲要提出，激励各类人才下乡服务和创业就业。各地不断推出一系列举措，吸引青年入乡发展、回乡创业就业，为乡村振兴注入新活力。浙江湖州安吉的缫舍村，这个创业团队20多位年轻人研发的无人机远销海外。团队负责人张羽泽是上海人，过去他常常来安吉进行无人机测试，这里不仅有试飞场地，还有创业免息贷款等政策，于是他决定把研发基地搬到这里。分布在湖州乡村的实践站点，能为创业人员提供创业孵化、技能培训、生活配套等服务，吸引了大批来自城市的“新农人”“农创客”。目前，湖州已有入乡青创项目2300多个。福建南平出台了《“回家乡来、助乡村兴”行动实施方案》，组建了10个返乡创业青年联盟，通过政府提供创业资金支持、开展创业帮带等措施，吸引年轻人返回家乡，助力乡村振兴。政和县王山口村孙榅棋正是受此影响回到家乡创业，开了一家奶茶店。眼下，贵州正着力培育乡村致富带头人。铜仁市江口县骆象村的党支部书记阙从汗就是通过参加茶叶病虫害防控技术、市场销售等培训，带领村民发展起抹茶产业，今年预计产值超过1600万元。目前，贵州已累计培育乡村产业振兴带头人3400多人，为乡村产业发展输送人才。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        <!-- display_horizontal_cn.govopendata.com -->
+                        <div class="ad-section" style="margin: 24px 0; min-height: 120px; text-align: center;">
+                            <ins class="adsbygoogle" style="display:block"
+                                data-ad-client="ca-pub-7793722968833990" data-ad-slot="6910450486"
+                                data-ad-format="auto" data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                        
+                        
+                        <article class="content-section" id="section-7413658">
+                            <h2 class="content-heading">【一线调研】算力网织就数字经济新底座</h2>
+                            <div class="content-body">
+                                <p>人工智能爆发式增长，对算力需求正呈现出指数级攀升。如何让用算力也像用水电一样既普惠又方便？一张互联互通的全国一体化算力网正从无到有，不断生长起来。来看记者的一线调研。记者来到北京人工智能公共算力中心时，工作人员正忙着为企业匹配算力。调度平台上的两个数字，引起了记者的注意。像是这样的算力资源供不应求，不止在北京。伴随国产大模型和智能体爆发式增长，记者发现，作为大模型处理信息的最小单元，词元的全国日均调用量在短短两年间增长超1400倍，今年以来更是加速增长，而调用词元的上千家人工智能企业大部分在东部。与此同时，我国“东数西算”八大算力枢纽节点，西部地区占了5席，这里坐拥风电光伏，算力成本更低。那么，西部的算力中心，如何接住东部井喷式的算力需求？记者来到内蒙古呼和浩特和林格尔新区“东数西算”数据中心集群所在地。记者发现，方圆3公里范围，多达30余栋数据中心正同时开建。而在宁夏中卫，这里同样迎来算力中心的密集施工期。记者注意到，这里新建机房的天花板都特别高。施工人员告诉记者，机房过去的层高往往只有5米左右，而现在已经“长高”到7.5米。眼下，全国大大小小的算力节点正迎来近年来规模最大的一次算力扩容。然而，新挑战又来了，东西之间“搬运算力”的光缆已经跟不上算力扩容的节奏。夜色之中，跟随这些流动的光点，记者来到一段新修的高铁线上。一条骨干光缆正在这里施工，并将首次长距离穿越东西走向的秦岭。如今，“新八纵八横”骨干光缆网络正沿着高铁线不断延伸。在“东数西算”算力枢纽节点和数据中心集群周围，连接的线条不断生长加密，一批“算力新城”首次实现骨干光缆高速直连，越织越密的光缆网络正在为算力网建设筑牢底座。有了底座，如何让各种算力资源都能在上面自由“跑”起来？在深圳的鹏城国家实验室里，记者发现，这支科研“突击队”正尝试把分散的算力中心变成“全国云端一盘棋”。未来，借助算力网，全社会使用人工智能服务的效能将提升千百倍。今天，一张无形的算力网正加快铺展，开启一个万亿级的投资周期，带动光通信、人工智能服务器等产业快速增长。从算力基础设施运维人员到人工智能训练师，新的职业机遇将接连涌现，带来百万量级的就业岗位。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413659">
+                            <h2 class="content-heading">国内联播快讯</h2>
+                            <div class="content-body">
+                                <p>文化和自然遗产日主场城市活动在武汉举行今天（6月13日），2026年文化和自然遗产日主场城市活动在湖北武汉举行。活动围绕“文物属于人民 服务人民”主题，集中展示文化遗产保护传承新进展新成效。各地文物部门也组织了丰富多彩的线上线下活动，推动文物惠民服务，丰富群众文化生活。多部门联合发文 推动新能源重卡规模化应用近日，交通运输部、国家发展改革委等11个部门联合发布《推动新能源重卡规模化应用实施方案》，提出到2030年，新能源重卡渗透率将达到40%，保有量突破160万辆，占总保有量的20%左右。四部门部署农村务农务工出行安全整治工作近日，国务院安委会办公室、公安部、交通运输部、农业农村部联合部署加强“三夏”“三秋”等重点时段农村务农务工出行安全整治工作，严厉查处超员载客、违法载人等违法行为，持续打击非法营运车辆，坚决防范遏制重特大事故。中央网信办开设“涉AI应用乱象举报专区”配合“清朗·整治AI应用乱象”专项行动，中央网信办举报中心自6月起开设“涉AI应用乱象举报专区”，专项受理公众举报。受理范围主要包括生成合成内容标识落实不到位、制作发布虚假不实信息等14类问题。我国将持续推动建设全国一体化反诈技防能力记者从工业和信息化部了解到，我国将持续推动建设全国一体化反诈技防能力。目前，工业和信息化部已常态化开展涉诈App监测预警。2025年，累计对监测发现的2.7万款涉诈App预警提醒达4105万次。南方今起降雨增强 局地特大暴雨中央气象台预计，从今天（6月13日）到18日，南方地区进入强降雨集中期。贵州、湖南、江西、浙江、广东等地将有大到暴雨，局地特大暴雨，并伴有雷暴大风。近期，南方地区降雨持续时间长、累计雨量大、致灾风险高，公众需密切关注天气预警信息。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413660">
+                            <h2 class="content-heading">伊朗外长披露伊美谅解备忘录草案部分内容</h2>
+                            <div class="content-body">
+                                <p>伊朗外交部长阿拉格齐12日晚在伊朗媒体的采访中披露了伊美谅解备忘录草案的部分内容。主要为：结束包括黎巴嫩在内的所有战线的军事冲突，美国解除对伊朗的海上封锁，伊朗被冻结海外资产将逐步解冻。有关核问题，阿拉格齐表示，伊方坚持认为，如需处理现有高浓缩铀库存，唯一可接受方式是在伊朗境内实施“稀释处理”，而非转移至境外。阿拉格齐还表示，伊美签署谅解备忘录是谈判进程第一阶段，下一阶段是计划为期60天的正式谈判。他强调，谅解文件尚未最终签署，相关内容仍可能进行调整，伊方将在最终敲定后公布具体细节。据多家美国媒体报道，一名美国政府高级官员12日表示，美方对在未来几天内与伊朗签署谅解备忘录抱有比较大的信心，但不是百分之百确定。报道称，谅解备忘录的具体内容美伊的表述仍存在矛盾之处。以色列国防部长卡茨12日称，以色列必须确保未来“有能力展开独立行动，以阻止伊朗获得核武器”，以色列不会从以军在黎巴嫩、叙利亚和巴勒斯坦加沙地带所占领的地区撤出。国际油价进一步下跌受美伊可能近日签署谅解备忘录的预期影响，国际油价12日明显下跌。截至当天收盘，纽约商品交易所7月交货的轻质原油期货价格和8月交货的伦敦布伦特原油期货价格跌幅都超过3%。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                        <article class="content-section" id="section-7413661">
+                            <h2 class="content-heading">国际联播快讯</h2>
+                            <div class="content-body">
+                                <p>黎媒称黎以新谈判将涉及“试点区”问题据黎巴嫩媒体今天（6月13日）报道，黎巴嫩与以色列新一轮谈判将于22日在美国首都华盛顿举行，将涉及以军从“试点区”撤军的问题。根据黎以此前谈判结果，双方同意在黎巴嫩境内建立所谓“试点区”，由黎巴嫩武装部队专属管控。以色列国防军12日发表声明称，近期在黎南部的一系列军事行动中，以军已打死十多名黎真主党高级指挥官。古巴国家主席谴责美国收紧对古石油封锁古巴国家主席迪亚斯-卡内尔12日谴责美国进一步收紧对古石油封锁，指责美方行径“毫无底线”可言。迪亚斯-卡内尔还表示，为应对美国持续施压，古巴已确定一系列重点工作，涵盖国防准备、经济社会发展、对外开放、能源转型等领域。南极半岛出现异常高温据多家媒体报道，阿根廷埃斯佩兰萨南极科考站观测数据显示，南极半岛6月初出现15.4摄氏度的异常气温，超过历史上6月的单日最高气温纪录，也就是1998年录得的13.3摄氏度，冰层也出现异常融化。位于南半球的南极半岛目前正处于冬季。据报道，历史记录中埃斯佩兰萨南极科考站6月的平均最高气温为零下6.2摄氏度。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        <!-- display_horizontal_cn.govopendata.com -->
+                        <div class="ad-section" style="margin: 24px 0; min-height: 120px; text-align: center;">
+                            <ins class="adsbygoogle" style="display:block"
+                                data-ad-client="ca-pub-7793722968833990" data-ad-slot="6910450486"
+                                data-ad-format="auto" data-full-width-responsive="true"></ins>
+                            <script>
+                                (adsbygoogle = window.adsbygoogle || []).push({});
+                            </script>
+                        </div>
+                        
+                        
+                        <article class="content-section" id="section-7413662">
+                            <h2 class="content-heading">文化和自然遗产日</h2>
+                            <div class="content-body">
+                                <p>华夏大地，分布着灿烂辉煌的世界文化和自然遗产。节目的最后，让我们一起领略中华文明的文化之美、自然之美。</p>
+                            </div>
+                        </article>
+                        
+                        
+                        
+                    </main>
+
+                    
+                    <!-- display_horizontal_cn.govopendata.com -->
+                    <div class="ad-section" style="margin-top: 40px; min-height: 280px;">
+                        <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7793722968833990"
+                            data-ad-slot="6910450486" data-ad-format="auto" data-full-width-responsive="true"></ins>
+                        <script>
+                            (adsbygoogle = window.adsbygoogle || []).push({});
+                        </script>
+                    </div>
+                    
+
+                    <!-- 底部日期导航 -->
+                    <nav class="date-navigation bottom-nav" aria-label="日期导航">
+                        
+                        <a class="nav-btn nav-btn-prev" href="/xinwenlianbo/20260612/"
+                            title="2026-06-12新闻联播">
+                            <i class="fas fa-chevron-left"></i>
+                            <span class="nav-btn-label">上一天</span>
+                            <span class="nav-btn-date">2026-06-12</span>
+                        </a>
+                        
+
+                        
+                        <a class="nav-btn nav-btn-next" href="/xinwenlianbo/20260614/"
+                            title="2026-06-14新闻联播">
+                            <span class="nav-btn-label">下一天</span>
+                            <span class="nav-btn-date">2026-06-14</span>
+                            <i class="fas fa-chevron-right"></i>
+                        </a>
+                        
+                    </nav>
+                </div>
+
+                <div class="col-12 col-lg-3">
+                    <aside class="sidebar-detail">
+                        <div class="sidebar-card-detail">
+                            <div class="sidebar-card-header">
+                                <i class="fas fa-calendar-alt mr-2"></i>
+                                <h3 class="sidebar-title">跳转日期</h3>
+                            </div>
+                            <div class="sidebar-card-body">
+                                
+                                <form action="/xinwenlianbo/jump_news/" method="get" class="date-jump-form">
+                                    
+                                    <div>
+    <label for="datepicker">历史上的新闻联播:</label>
+
+
+
+<input type="date" name="news_date" value="2026-06-13" id="datepicker" required>
+    
+      
+    
+</div>
+                                    <button type="submit" class="btn-submit-date">
+                                        <i class="fas fa-calendar-check mr-2"></i>
+                                        跳转日期
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        
+                        <!-- display_horizontal_cn.govopendata.com -->
+                        <div class="sidebar-card-detail">
+                            <div class="sidebar-card-body" style="padding: 10px; min-height: 280px;">
+                                <ins class="adsbygoogle" style="display:block" data-ad-client="ca-pub-7793722968833990"
+                                    data-ad-slot="6910450486" data-ad-format="auto"
+                                    data-full-width-responsive="true"></ins>
+                                <script>
+                                    (adsbygoogle = window.adsbygoogle || []).push({});
+                                </script>
+                            </div>
+                        </div>
+                        
+
+                        <nav id="toc" data-toggle="toc" class="toc-nav"></nav>
+                    </aside>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    /* 详情页特定样式 - 简化版本 */
+    .detail-container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 20px 20px;
+    }
+
+    /* 覆盖全局 main-content padding */
+    .main-content {
+        padding-top: 10px !important;
+    }
+
+    /* 覆盖一些特定样式 */
+    .article-header {
+        padding-bottom: 20px;
+        margin-bottom: 24px;
+        border-bottom: 2px solid rgba(0, 102, 204, 0.1);
+    }
+
+    .article-title {
+        color: #000000;
+    }
+
+    .article-meta {
+        color: #1a1a1a !important;
+    }
+
+    .meta-item {
+        color: #1a1a1a !important;
+    }
+
+    .date-navigation.primary-nav {
+        display: flex;
+        align-items: stretch;
+        gap: 16px;
+        margin-top: 12px;
+        margin-bottom: 8px;
+        padding-top: 12px;
+        border-top: 1px solid rgba(0, 102, 204, 0.08);
+        flex-wrap: wrap;
+    }
+
+    .date-navigation.primary-nav .nav-btn {
+        flex: 1 1 240px;
+        min-width: 0;
+        padding: 12px 18px;
+    }
+
+    .date-navigation.primary-nav .nav-btn-date {
+        font-size: 0.95rem;
+        margin-top: 4px;
+    }
+
+    .date-navigation.primary-nav .nav-btn-label {
+        font-size: 1rem;
+    }
+
+    .date-navigation.bottom-nav {
+        margin-top: 60px;
+        margin-bottom: 40px;
+        padding-top: 40px;
+        border-top: 2px solid rgba(0, 102, 204, 0.1);
+        justify-content: space-between;
+    }
+
+    .nav-btn {
+        min-width: 160px;
+    }
+
+    .nav-btn:hover {
+        background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+        color: #0066cc;
+        border-color: #0066cc;
+        text-decoration: none;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 102, 204, 0.15);
+    }
+
+    .nav-btn-disabled {
+        opacity: 0.3;
+        cursor: not-allowed;
+        border-color: #e9ecef;
+        pointer-events: none;
+        background: #f8f9fa;
+    }
+
+    .nav-btn-prev {
+        flex-direction: row;
+    }
+
+    .nav-btn-prev i {
+        margin-right: 8px;
+    }
+
+    .nav-btn-next {
+        flex-direction: row-reverse;
+    }
+
+    .nav-btn-next i {
+        margin-left: 8px;
+    }
+
+    /* 广告区域 */
+    .ad-section {
+        margin: 24px 0;
+        padding: 0;
+        background: transparent;
+    }
+
+    /* 文章内容增强 */
+    .content-section {
+        padding: 24px 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+        animation: fadeInUp 0.6s ease-out;
+        animation-fill-mode: both;
+    }
+
+    .content-section:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .content-section:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .content-section:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .content-section:last-child {
+        border-bottom: none;
+    }
+
+    .content-heading {
+        font-size: 1.875rem;
+        font-weight: 700;
+        color: #000000;
+        margin-top: 0;
+        margin-bottom: 24px;
+        line-height: 1.35;
+        padding-left: 20px;
+        border-left: 4px solid #0066cc;
+    }
+
+    .content-body {
+        color: #1a1a1a !important;
+        font-size: 1.125rem;
+        line-height: 1.85;
+        letter-spacing: 0.01em;
+        max-width: 48rem;
+        font-weight: 400;
+    }
+
+    .content-body p {
+        color: #1a1a1a !important;
+        margin-bottom: 1.5em;
+        text-align: justify;
+        text-justify: inter-ideograph;
+    }
+
+    /* 侧边栏增强 */
+    .sidebar-detail {
+        position: sticky;
+        top: 100px;
+    }
+
+    .sidebar-card-detail {
+        background: white;
+        border: none;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+        transition: all 0.3s ease;
+    }
+
+    .sidebar-card-detail:hover {
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+        transform: translateY(-2px);
+    }
+
+    /* 自定义表单输入增强 */
+    .date-jump-form input[type="date"],
+    .date-jump-form input[type="text"],
+    .date-jump-form select {
+        width: 100%;
+        padding: 10px 14px;
+        border: 2px solid #e2e8f0;
+        border-radius: 8px;
+        font-size: 14px;
+        color: #334155;
+        background-color: white;
+        transition: all 0.3s ease;
+        margin-bottom: 12px;
+    }
+
+    .date-jump-form input[type="date"]:focus,
+    .date-jump-form input[type="text"]:focus,
+    .date-jump-form select:focus {
+        outline: none;
+        border-color: #0066cc;
+        box-shadow: 0 0 0 4px rgba(0, 102, 204, 0.1);
+        background-color: #f0f9ff;
+    }
+
+    /* 目录导航 */
+    .toc-nav {
+        background: transparent;
+        border-left: 2px solid var(--border-light);
+        border-radius: 0;
+        padding: var(--space-2) var(--space-4);
+        box-shadow: none;
+        max-height: calc(100vh - 200px);
+        overflow-y: auto;
+    }
+
+    /* 响应式优化 */
+    @media (max-width: 1023px) {
+        .article-title {
+            font-size: 2rem;
+        }
+
+        .sidebar-detail {
+            position: static;
+            margin-top: var(--space-8);
+        }
+
+        .date-navigation.bottom-nav {
+            margin-top: var(--space-6);
+        }
+    }
+
+    @media (max-width: 768px) {
+        .detail-container {
+            padding: var(--space-4);
+        }
+
+        .article-header {
+            padding-bottom: var(--space-4);
+            margin-bottom: var(--space-6);
+        }
+
+        .article-title {
+            font-size: 1.75rem;
+        }
+
+        .content-heading {
+            font-size: 1.5rem;
+        }
+
+        .content-body {
+            font-size: 1.05rem;
+            line-height: 1.7;
+        }
+
+        .content-section {
+            padding: var(--space-4) 0;
+        }
+
+        .article-meta {
+            gap: var(--space-4);
+        }
+
+        .date-navigation.primary-nav {
+            gap: var(--space-3);
+            padding-top: var(--space-3);
+        }
+
+        .date-navigation.primary-nav .nav-btn {
+            flex: 1 1 100%;
+        }
+    }
+
+    /* 优化阅读体验 */
+    .content-body {
+        font-feature-settings: "liga" 1, "calt" 1, "kern" 1;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 选中文本样式 */
+    .content-body ::selection {
+        background: rgba(0, 0, 0, 0.1);
+        /* 更柔和的选中色 */
+        color: inherit;
+    }
+</style>
+
+    </main>
+
+    <footer class="footer mt-auto py-3 bg-light">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="mb-0">© 2026 cn.govopendata.com - 公开数据查询平台</p>
+                    
+                    <!-- Twitter分享按钮 - 使用固定域名而非动态获取 -->
+                        <a href="https://twitter.com/intent/tweet?url=https://cn.govopendata.com/xinwenlianbo/20260613/"
+                           class="btn btn-sm btn-outline-primary twitter-share-button" 
+                           aria-label="分享到Twitter">
+                            <i class="fab fa-twitter"></i> 分享到Twitter
+                        </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <button id="back-to-top" class="btn back-to-top" title="返回顶部" aria-label="返回顶部">
+        <i class="fas fa-arrow-up" aria-hidden="true"></i>
+        <span class="sr-only">返回顶部</span>
+    </button>
+
+    <!-- 处理无JavaScript环境 -->
+    <noscript>
+        <style>
+            .back-to-top { display: none !important; }
+            img.lazy { opacity: 1 !important; }
+        </style>
+        <div class="alert alert-warning" role="alert">
+            请启用JavaScript以获得最佳体验。
+        </div>
+    </noscript>
+
+    
+
+    <!-- jQuery, Popper.js, and Bootstrap JS -->
+    <!-- 已在上方以 defer 方式加载，避免阻塞渲染 -->
+    <!-- <script src="https://s3.qingbuyaohaixiu.com/static/jquery.min.js"></script> -->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script> -->
+    <!-- <script src="https://s3.qingbuyaohaixiu.com/static/bootstrap.min.js"></script> -->
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'a0c2fa1eef307eb7',t:'MTc4MTU0MTIxMQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
