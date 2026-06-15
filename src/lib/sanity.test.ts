@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { projectName } from './sanity';
+import { projectName } from '@/lib/sanity';
 
 describe('toolchain', () => {
   it('imports source modules and runs assertions', () => {
