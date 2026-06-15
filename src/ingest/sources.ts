@@ -39,7 +39,9 @@ export async function fromTushare(date: string): Promise<ParsedTranscript> {
   const rows = json.data?.items ?? [];
   const fields = json.data?.fields ?? [];
   const ci = fields.indexOf('content');
-  const content = ci >= 0 && rows[0] ? String(rows[0][ci] ?? '') : '';
+  // cctv_news may return one row per segment — join all rows into the full transcript.
+  const content =
+    ci >= 0 ? rows.map((r) => String(r[ci] ?? '').trim()).filter(Boolean).join('\n') : '';
   return validateTranscript(parseTushare({ date: ymd(date), content }, date));
 }
 
