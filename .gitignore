@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+
+# Build output
+.next/
+out/
+dist/
+build/
+
+# Env / secrets
+.env
+.env*.local
+.env.production
+
+# Vercel
+.vercel
+
+# Brainstorm visual companion (local only)
+.superpowers/
+
+# OS / editor
+.DS_Store
+*.log
+.idea/
+.vscode/
