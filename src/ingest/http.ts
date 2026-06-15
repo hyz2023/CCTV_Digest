@@ -12,6 +12,8 @@ export interface FetchOptions {
   maxRetries?: number;
   baseDelayMs?: number;
   sleep?: (ms: number) => Promise<void>;
+  method?: string;
+  body?: string;
 }
 
 const defaultSleep = (ms: number) => new Promise<void>((r) => setTimeout(r, ms));
@@ -23,13 +25,15 @@ export async function fetchWithRetry(url: string, opts: FetchOptions = {}): Prom
     maxRetries = 3,
     baseDelayMs = 500,
     sleep = defaultSleep,
+    method = 'GET',
+    body,
   } = opts;
   const merged = { ...BROWSER_HEADERS, ...headers };
 
   let lastErr: unknown;
   for (let attempt = 0; attempt <= maxRetries; attempt++) {
     try {
-      const r = await fetchImpl(url, { headers: merged });
+      const r = await fetchImpl(url, { method, headers: merged, body });
       if (r.ok) return await r.text();
       if (r.status === 429 || r.status >= 500) {
         lastErr = new Error(`HTTP ${r.status} for ${url}`);

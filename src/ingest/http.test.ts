@@ -48,4 +48,18 @@ describe('fetchWithRetry', () => {
     await fetchWithRetry('https://x/', { fetchImpl, sleep, maxRetries: 3, baseDelayMs: 100 });
     expect(sleeps).toEqual([100, 200]);
   });
+
+  it('passes method and body to fetchImpl for POST requests', async () => {
+    const fetchImpl = vi.fn(async () => res(200, 'posted'));
+    const out = await fetchWithRetry('https://x/', {
+      fetchImpl: fetchImpl as typeof fetch,
+      sleep: noSleep,
+      method: 'POST',
+      body: '{"a":1}',
+    });
+    expect(out).toBe('posted');
+    const [, init] = fetchImpl.mock.calls[0] as unknown as [string, RequestInit];
+    expect(init.method).toBe('POST');
+    expect(init.body).toBe('{"a":1}');
+  });
 });
