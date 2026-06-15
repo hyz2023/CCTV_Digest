@@ -13,6 +13,12 @@ function stripHtml(html: string): string {
     .trim();
 }
 
+// govopendata injects this placeholder as a section heading for unavailable
+// articles, even inside an otherwise-real page — keep it out of `items`.
+function isErrorArtifact(s: string): boolean {
+  return /对不起|无此页面|请稍后/.test(s);
+}
+
 export function parseGithubMd(md: string, date: string): ParsedTranscript {
   const items: string[] = [];
   for (const line of md.split('\n')) {
@@ -44,14 +50,14 @@ export function parseGovopendata(html: string, date: string): ParsedTranscript {
   let m: RegExpExecArray | null;
   while ((m = contentHeadingRe.exec(html))) {
     const t = stripHtml(m[1]).trim();
-    if (t && !/新闻联播\s*$/.test(t)) items.push(t);
+    if (t && !/新闻联播\s*$/.test(t) && !isErrorArtifact(t)) items.push(t);
   }
   // Fall back to any h2/h3 if no content-heading found (representative fixture)
   if (items.length === 0) {
     const headingRe = /<h[23][^>]*>([\s\S]*?)<\/h[23]>/gi;
     while ((m = headingRe.exec(html))) {
       const t = stripHtml(m[1]).trim();
-      if (t && !/新闻联播\s*$/.test(t)) items.push(t);
+      if (t && !/新闻联播\s*$/.test(t) && !isErrorArtifact(t)) items.push(t);
     }
   }
   const text = stripHtml(html);

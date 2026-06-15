@@ -27,6 +27,9 @@ describe('parseTushare', () => {
     expect(t.text).toContain('海峡论坛');
     expect(t.date).toBe('2026-06-13');
   });
+  it('splits content into headline items', () => {
+    expect(t.items.length).toBeGreaterThan(0);
+  });
 });
 
 describe('parseGovopendata', () => {
@@ -35,5 +38,9 @@ describe('parseGovopendata', () => {
     expect(t.source).toBe('govopendata');
     expect(t.text).not.toContain('<p>');
     expect(t.text.length).toBeGreaterThan(20);
+  });
+  it('extracts headline items, filtering out error-artifact strings', () => {
+    expect(t.items.length).toBeGreaterThan(0);
+    expect(t.items.some((s) => /对不起|无此页面/.test(s))).toBe(false);
   });
 });
