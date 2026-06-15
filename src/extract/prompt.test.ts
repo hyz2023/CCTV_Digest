@@ -12,6 +12,6 @@ describe('buildExtractionPrompt', () => {
     expect(p).toMatch(/行业|板块/);
   });
   it('asks to read it as signal, not restate facts', () => {
-    expect(p).toMatch(/信号|编辑选择|不要复述|不臆造|忠实/);
+    expect(p).toMatch(/信号|编辑选择|不要复述|不要臆造|忠实/);
   });
 });

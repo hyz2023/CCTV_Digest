@@ -21,5 +21,6 @@ const DEFAULT_DEPS: ExtractDeps = {
 };
 
 export async function extractTranscript(text: string, deps: ExtractDeps = DEFAULT_DEPS): Promise<Extraction> {
+  if (!text.trim()) throw new Error('transcript must not be empty');
   return deps.generate(text);
 }

@@ -15,4 +15,10 @@ describe('extractTranscript', () => {
     expect(out).toEqual(canned);
     expect(generate).toHaveBeenCalledWith('正文');
   });
+
+  it('throws on an empty/whitespace transcript without calling generate', async () => {
+    const generate = vi.fn(async () => canned);
+    await expect(extractTranscript('   ', { generate })).rejects.toThrow(/empty/);
+    expect(generate).not.toHaveBeenCalled();
+  });
 });
