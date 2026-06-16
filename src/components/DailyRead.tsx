@@ -2,6 +2,8 @@ import type { CrossSection } from '@/viz/series';
 import type { DayItem, Signal, RadarView } from '@/data/queries';
 import { radarLabel, radarIcon } from '@/data/labels';
 import SignalCard from '@/components/SignalCard';
+import RiverChart from '@/components/RiverChart';
+import type { StreamSeries } from '@/viz/series';
 
 interface Props {
   date: string;
@@ -9,6 +11,7 @@ interface Props {
   items: DayItem[];
   signals: Signal[];
   radar: RadarView[];
+  riverSeries: StreamSeries;
 }
 
 const SECTION_LABEL: React.CSSProperties = {
@@ -29,7 +32,7 @@ const NAV_STYLE: React.CSSProperties = {
   borderBottom: '1px solid #1b1b26',
 };
 
-export default function DailyRead({ date, crossSection, items, signals, radar }: Props) {
+export default function DailyRead({ date, crossSection, items, signals, radar, riverSeries }: Props) {
   // Group items by segment, preserving ord order
   const groups = new Map<string, DayItem[]>();
   for (const it of items) {
@@ -40,7 +43,7 @@ export default function DailyRead({ date, crossSection, items, signals, radar }:
   const maxVal = Math.max(1, ...crossSection.entries.map((e) => e.value));
 
   return (
-    <main className="rise-in" style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
+    <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
       {/* Nav */}
       <header style={NAV_STYLE}>
         <div style={{ fontWeight: 800, letterSpacing: 1 }}>联播 · 脉络</div>
@@ -50,7 +53,17 @@ export default function DailyRead({ date, crossSection, items, signals, radar }:
         </nav>
       </header>
 
-      <div style={{ maxWidth: 860, margin: '0 auto', padding: '40px 28px' }}>
+      <div
+        className="fade-in"
+        style={{ position: 'sticky', top: 0, zIndex: 5, height: '14vh', minHeight: 96, borderBottom: '1px solid #1b1b26' }}
+      >
+        <RiverChart series={riverSeries} showReadout={false} currentDate={date} />
+        <div style={{ position: 'absolute', left: 14, bottom: 8, fontSize: 11, color: '#c99', pointerEvents: 'none' }}>
+          当前 {date} · 扫描或点击切换日期
+        </div>
+      </div>
+
+      <div className="rise-in" style={{ maxWidth: 860, margin: '0 auto', padding: '40px 28px' }}>
         {/* Kicker */}
         <div style={{ fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', color: '#c99', marginBottom: 8 }}>
           每日解读 · DAILY SLICE
