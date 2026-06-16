@@ -3,6 +3,6 @@ import { ADMIN_COOKIE } from '@/auth/session';
 
 export async function POST() {
   const res = NextResponse.json({ ok: true });
-  res.cookies.set(ADMIN_COOKIE, '', { httpOnly: true, path: '/', maxAge: 0 });
+  res.cookies.set(ADMIN_COOKIE, '', { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 0 });
   return res;
 }

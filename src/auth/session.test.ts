@@ -27,6 +27,10 @@ describe('session signing', () => {
     expect(await verifySession('', SECRET)).toBe(false);
     expect(await verifySession('garbage', SECRET)).toBe(false);
   });
+  it('rejects (fails closed) when the verifying secret is empty', async () => {
+    const token = await signSession(SECRET, { ttlMs: 1000, now: NOW });
+    expect(await verifySession(token, '', { now: NOW + 500 })).toBe(false);
+  });
 });
 
 describe('checkPassword', () => {

@@ -11,6 +11,6 @@ export async function POST(req: NextRequest) {
   }
   const token = await signSession(secret);
   const res = NextResponse.json({ ok: true });
-  res.cookies.set(ADMIN_COOKIE, token, { httpOnly: true, sameSite: 'lax', secure: true, path: '/', maxAge: 7 * 86400 });
+  res.cookies.set(ADMIN_COOKIE, token, { httpOnly: true, sameSite: 'lax', secure: process.env.NODE_ENV === 'production', path: '/', maxAge: 7 * 86400 });
   return res;
 }
