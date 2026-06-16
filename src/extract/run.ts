@@ -22,7 +22,9 @@ const DEFAULT_DEPS: ExtractRunDeps = {
     return rows[0];
   },
   loadText: async (blobUrl) => {
-    const res = await fetch(blobUrl);
+    // Private blob store: reads require the read-write token as a Bearer header.
+    const token = process.env.BLOB_READ_WRITE_TOKEN;
+    const res = await fetch(blobUrl, token ? { headers: { Authorization: `Bearer ${token}` } } : undefined);
     if (!res.ok) throw new Error(`failed to load transcript blob: HTTP ${res.status}`);
     return res.text();
   },

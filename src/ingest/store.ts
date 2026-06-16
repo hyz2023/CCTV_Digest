@@ -22,7 +22,14 @@ export interface StoreDeps {
 
 const DEFAULT_DEPS: StoreDeps = {
   putBlob: async (key, body) => {
-    const r = await put(key, body, { access: 'public', contentType: 'text/plain; charset=utf-8' });
+    // Private store: transcripts are not public assets; read back via authenticated
+    // fetch in extract (loadText) using BLOB_READ_WRITE_TOKEN. allowOverwrite so
+    // re-ingesting a day replaces its blob instead of throwing on the same pathname.
+    const r = await put(key, body, {
+      access: 'private',
+      contentType: 'text/plain; charset=utf-8',
+      allowOverwrite: true,
+    });
     return { url: r.url };
   },
   upsertDay: async (row) => {
