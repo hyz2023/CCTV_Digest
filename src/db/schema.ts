@@ -29,6 +29,7 @@ export const item = pgTable('item', {
   day: date('day').notNull(),
   ord: integer('ord').notNull(),
   segment: text('segment').notNull(),
+  title: text('title'),
   lengthProxy: integer('length_proxy'),
   text: text('text'),
   summary: text('summary'),
@@ -50,7 +51,7 @@ export const tifa = pgTable('tifa', {
 export const tifaMention = pgTable('tifa_mention', {
   id: serial('id').primaryKey(),
   day: date('day').notNull(),
-  tifaId: integer('tifa_id').notNull(),
+  term: text('term').notNull(), // denormalized natural key; tifa table holds metadata (first_seen/aliases)
   count: integer('count').notNull().default(1),
   context: text('context'),
 });
