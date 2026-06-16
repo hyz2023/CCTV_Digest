@@ -15,7 +15,8 @@
     "backfill": "tsx scripts/backfill.ts",
     "ingest:day": "tsx scripts/ingest-day.ts",
     "extract:backfill": "tsx scripts/extract-backfill.ts",
-    "analyze:backfill": "tsx scripts/analyze-backfill.ts"
+    "analyze:backfill": "tsx scripts/analyze-backfill.ts",
+    "threads:synthesize": "tsx scripts/synthesize-threads.ts"
   },
   "dependencies": {
     "@ai-sdk/openai-compatible": "^2.0.50",

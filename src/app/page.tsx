@@ -1,11 +1,12 @@
 import RiverChart from '@/components/RiverChart';
 import { getMentions } from '@/data/queries';
 import { buildStreamSeries } from '@/viz/series';
+import { getThreadStreamSeries } from '@/data/threads';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const series = buildStreamSeries(await getMentions(), { topN: 6 });
+  const series = (await getThreadStreamSeries()) ?? buildStreamSeries(await getMentions(), { topN: 6 });
   return (
     <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECEAE3' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 28px', borderBottom: '1px solid #1b1b26' }}>
