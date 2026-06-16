@@ -1,11 +1,19 @@
 import type { CrossSection } from '@/viz/series';
-import type { DayItem } from '@/data/queries';
+import type { DayItem, Signal, RadarView } from '@/data/queries';
+import { radarLabel, radarIcon } from '@/data/labels';
+import SignalCard from '@/components/SignalCard';
 
 interface Props {
   date: string;
   crossSection: CrossSection;
   items: DayItem[];
+  signals: Signal[];
+  radar: RadarView[];
 }
+
+const SECTION_LABEL: React.CSSProperties = {
+  fontSize: 12, letterSpacing: 3, textTransform: 'uppercase', color: '#8a8a98', marginBottom: 14,
+};
 
 const SEGMENT_LABEL: Record<string, string> = {
   leader: '领导动态',
@@ -21,7 +29,7 @@ const NAV_STYLE: React.CSSProperties = {
   borderBottom: '1px solid #1b1b26',
 };
 
-export default function DailyRead({ date, crossSection, items }: Props) {
+export default function DailyRead({ date, crossSection, items, signals, radar }: Props) {
   // Group items by segment, preserving ord order
   const groups = new Map<string, DayItem[]>();
   for (const it of items) {
@@ -81,6 +89,38 @@ export default function DailyRead({ date, crossSection, items }: Props) {
           </div>
         </section>
 
+        {/* §雷达 · 今日相对基线的变化 */}
+        <section style={{ marginBottom: 40 }}>
+          <div style={SECTION_LABEL}>§ 雷达 · 今日变化</div>
+          {radar.length === 0 ? (
+            <p style={{ color: '#6b6b78', fontSize: 13 }}>今日无显著雷达变化（相对 90 天基线）。</p>
+          ) : (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+              {radar.map((r, i) => (
+                <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 10, fontSize: 14 }}>
+                  <span style={{ color: '#c99', minWidth: 96, fontSize: 12 }}>{radarIcon(r.type)} {radarLabel(r.type)}</span>
+                  <span style={{ color: '#ECE7DD' }}>{r.target}</span>
+                  {r.magnitude != null ? (
+                    <span style={{ color: '#6b6b78', fontSize: 12 }}>强度 {Number(r.magnitude).toFixed(r.magnitude % 1 ? 2 : 0)}</span>
+                  ) : null}
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+
+        {/* §晨报 · Top-3 信号（三层可展开解读） */}
+        <section style={{ marginBottom: 40 }}>
+          <div style={SECTION_LABEL}>§ 晨报 · 今日信号</div>
+          {signals.length === 0 ? (
+            <p style={{ color: '#6b6b78', fontSize: 13 }}>本日暂无深度解读（可能尚未分析）。</p>
+          ) : (
+            signals.map((s, i) => <SignalCard key={i} signal={s} index={i} />)
+          )}
+        </section>
+
+        {/* §三段式 · 节目单 */}
+        <div style={SECTION_LABEL}>§ 三段式 · 节目单</div>
         {/* Items grouped by segment */}
         {items.length === 0 ? (
           <p style={{ color: '#8a8a98', fontSize: 14 }}>暂无节目单数据。</p>
