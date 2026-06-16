@@ -4,10 +4,16 @@ import { useState, useRef, useCallback } from 'react';
 import { useRouter } from 'next/navigation';
 import type { StreamSeries } from '@/viz/series';
 import { computeStreamPaths } from '@/viz/stream';
+import { levelOf, trendOf } from '@/viz/readout';
+import type { Level, Trend } from '@/viz/readout';
 
 const SVG_W = 1000;
 const SVG_H = 600;
 const PAD_X = 16;
+
+const ARROW: Record<Trend, string> = { up: '↑', flat: '→', down: '↓' };
+const ARROW_COLOR: Record<Trend, string> = { up: '#4ade80', flat: '#7a8699', down: '#f87171' };
+const LEVEL_COLOR: Record<Level, string> = { '强': '#e0436b', '中': '#fbbf24', '弱': '#64748b' };
 
 interface Props {
   series: StreamSeries;
@@ -71,11 +77,20 @@ export default function RiverChart({ series }: Props) {
       : PAD_X + (plotW * hoverIdx) / (n - 1);
 
   // Cross-section data for the readout panel
+  const dayMax = Math.max(1, ...series.streams.map((st) => st.values[hoverIdx] ?? 0));
   const crossSection = series.streams
-    .map((st) => ({ term: st.term, color: st.color, value: st.values[hoverIdx] ?? 0 }))
+    .map((st) => {
+      const value = st.values[hoverIdx] ?? 0;
+      return {
+        term: st.term,
+        color: st.color,
+        value,
+        level: levelOf(value, dayMax),
+        trend: trendOf(st.values, hoverIdx, { dayMax }),
+      };
+    })
     .sort((a, b) => b.value - a.value);
 
-  const maxValue = Math.max(1, ...crossSection.map((c) => c.value));
   const hoverPeriod = series.periods[hoverIdx] ?? '';
 
   return (
@@ -135,7 +150,7 @@ export default function RiverChart({ series }: Props) {
           border: '1px solid rgba(255,255,255,0.12)',
           borderRadius: '0.5rem',
           padding: '0.75rem 1rem',
-          minWidth: '11rem',
+          minWidth: '13rem',
           backdropFilter: 'blur(6px)',
           color: '#e2e8f0',
           fontSize: '0.78rem',
@@ -146,22 +161,15 @@ export default function RiverChart({ series }: Props) {
         <div style={{ fontWeight: 700, letterSpacing: '0.06em', marginBottom: '0.5rem', color: '#94a3b8', fontSize: '0.7rem' }}>
           {hoverPeriod}
         </div>
-        {crossSection.map(({ term, color, value }) => (
-          <div key={term} style={{ marginBottom: '0.35rem' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '0.15rem' }}>
-              <span style={{ color }}>{term}</span>
-              <span style={{ color: '#cbd5e1', fontVariantNumeric: 'tabular-nums' }}>{value}</span>
+        {crossSection.map(({ term, color, value, level, trend }) => (
+          <div key={term} style={{ marginBottom: '0.5rem' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: '1fr 16px 30px', alignItems: 'center', columnGap: '0.5rem', marginBottom: '0.25rem' }}>
+              <span style={{ color, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{term}</span>
+              <span style={{ textAlign: 'center', fontWeight: 700, color: ARROW_COLOR[trend] }}>{ARROW[trend]}</span>
+              <span style={{ textAlign: 'center', fontSize: '0.62rem', borderRadius: '4px', padding: '1px 0', color: LEVEL_COLOR[level], border: `1px solid ${LEVEL_COLOR[level]}55` }}>{level}</span>
             </div>
             <div style={{ height: '3px', background: 'rgba(255,255,255,0.1)', borderRadius: '2px', overflow: 'hidden' }}>
-              <div
-                style={{
-                  height: '100%',
-                  width: `${(value / maxValue) * 100}%`,
-                  background: color,
-                  borderRadius: '2px',
-                  transition: 'width 0.15s ease',
-                }}
-              />
+              <div style={{ height: '100%', width: `${(value / dayMax) * 100}%`, background: color, borderRadius: '2px', transition: 'width 0.15s ease' }} />
             </div>
           </div>
         ))}
