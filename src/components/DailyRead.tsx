@@ -1,0 +1,126 @@
+import type { CrossSection } from '@/viz/series';
+import type { DayItem } from '@/data/queries';
+
+interface Props {
+  date: string;
+  crossSection: CrossSection;
+  items: DayItem[];
+}
+
+const SEGMENT_LABEL: Record<string, string> = {
+  leader: '领导动态',
+  dev: '发展·民生',
+  intl: '国际',
+};
+
+const NAV_STYLE: React.CSSProperties = {
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  padding: '14px 28px',
+  borderBottom: '1px solid #1b1b26',
+};
+
+export default function DailyRead({ date, crossSection, items }: Props) {
+  // Group items by segment, preserving ord order
+  const groups = new Map<string, DayItem[]>();
+  for (const it of items) {
+    if (!groups.has(it.segment)) groups.set(it.segment, []);
+    groups.get(it.segment)!.push(it);
+  }
+
+  const maxVal = Math.max(1, ...crossSection.entries.map((e) => e.value));
+
+  return (
+    <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
+      {/* Nav */}
+      <header style={NAV_STYLE}>
+        <div style={{ fontWeight: 800, letterSpacing: 1 }}>联播 · 脉络</div>
+        <nav style={{ display: 'flex', gap: 20, fontSize: 13, color: '#8a8a98' }}>
+          <a href="/" style={{ color: '#8a8a98' }}>脉络</a>
+          <a href="/explore" style={{ color: '#8a8a98' }}>探索</a>
+        </nav>
+      </header>
+
+      <div style={{ maxWidth: 860, margin: '0 auto', padding: '40px 28px' }}>
+        {/* Kicker */}
+        <div style={{ fontSize: 11, letterSpacing: 4, textTransform: 'uppercase', color: '#c99', marginBottom: 8 }}>
+          每日解读 · DAILY SLICE
+        </div>
+
+        {/* Date headline */}
+        <h1
+          className="serif"
+          style={{ fontSize: 'clamp(28px, 4vw, 52px)', fontWeight: 800, margin: '0 0 32px', lineHeight: 1.15 }}
+        >
+          {date}
+        </h1>
+
+        {/* Cross-section strip */}
+        <section style={{ marginBottom: 40 }}>
+          <div style={{ fontSize: 12, letterSpacing: 3, textTransform: 'uppercase', color: '#8a8a98', marginBottom: 14 }}>
+            今日横截面
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+            {crossSection.entries.map((entry) => (
+              <div key={entry.term} style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+                <span style={{ minWidth: 80, fontSize: 13, color: '#ECE7DD' }}>{entry.term}</span>
+                <div style={{ flex: 1, height: 6, background: '#1b1b26', borderRadius: 3, overflow: 'hidden' }}>
+                  <div
+                    style={{
+                      height: '100%',
+                      width: `${(entry.value / maxVal) * 100}%`,
+                      background: '#e0436b',
+                      borderRadius: 3,
+                    }}
+                  />
+                </div>
+                <span style={{ fontSize: 12, color: '#8a8a98', minWidth: 28, textAlign: 'right' }}>{entry.value}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        {/* Items grouped by segment */}
+        {items.length === 0 ? (
+          <p style={{ color: '#8a8a98', fontSize: 14 }}>暂无节目单数据。</p>
+        ) : (
+          [...groups.entries()].map(([seg, segItems]) => (
+            <section key={seg} style={{ marginBottom: 40 }}>
+              <div
+                style={{
+                  fontSize: 11,
+                  letterSpacing: 3,
+                  textTransform: 'uppercase',
+                  color: '#c99',
+                  borderBottom: '1px solid #1b1b26',
+                  paddingBottom: 6,
+                  marginBottom: 16,
+                }}
+              >
+                {SEGMENT_LABEL[seg] ?? seg}
+              </div>
+              {segItems.map((it) => (
+                <article key={it.ord} style={{ marginBottom: 24 }}>
+                  <div style={{ display: 'flex', gap: 12, alignItems: 'baseline' }}>
+                    <span style={{ color: '#8a8a98', fontSize: 12, minWidth: 24 }}>{it.ord}.</span>
+                    {it.title ? (
+                      <h2 className="serif" style={{ fontSize: 18, fontWeight: 700, margin: 0, lineHeight: 1.4 }}>
+                        {it.title}
+                      </h2>
+                    ) : null}
+                  </div>
+                  {it.summary ? (
+                    <p style={{ color: '#9a9aac', fontSize: 14, lineHeight: 1.7, margin: '8px 0 0 36px' }}>
+                      {it.summary}
+                    </p>
+                  ) : null}
+                </article>
+              ))}
+            </section>
+          ))
+        )}
+      </div>
+    </main>
+  );
+}
