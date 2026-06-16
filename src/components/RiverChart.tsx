@@ -1,12 +1,15 @@
 'use client';
 
-import { useState, useRef, useCallback } from 'react';
+import { useState, useRef, useCallback, useMemo } from 'react';
 import { useTransitionRouter } from 'next-view-transitions';
 import type { StreamSeries } from '@/viz/series';
-import { computeStreamPaths } from '@/viz/stream';
+import { computeStreamPaths, computeStreamGeometry } from '@/viz/stream';
 import { levelOf, trendOf } from '@/viz/readout';
 import type { Level, Trend } from '@/viz/readout';
 import { anchorIndex } from '@/viz/anchor';
+import { hitStream } from '@/viz/focus';
+import { useStreamFocus } from '@/components/useStreamFocus';
+import StreamFocus from '@/components/StreamFocus';
 
 const SVG_W = 1000;
 const SVG_H = 600;
@@ -20,14 +23,18 @@ interface Props {
   series: StreamSeries;
   showReadout?: boolean;
   currentDate?: string;
+  enableIsolate?: boolean;
 }
 
-export default function RiverChart({ series, showReadout = true, currentDate }: Props) {
+export default function RiverChart({ series, showReadout = true, currentDate, enableIsolate = true }: Props) {
   const lastIdx = Math.max(0, series.periods.length - 1);
   const anchorIdx = anchorIndex(series.periods, currentDate, lastIdx);
   const [hoverIdx, setHoverIdx] = useState<number>(anchorIdx);
   const svgRef = useRef<SVGSVGElement>(null);
   const router = useTransitionRouter();
+
+  const geom = useMemo(() => computeStreamGeometry(series.streams, { width: SVG_W, height: SVG_H, padX: PAD_X }), [series.streams]);
+  const focus = useStreamFocus(enableIsolate);
 
   // periods 现在是真实日期（YYYY-MM-DD）→ 点击直接进当天。
   // useTransitionRouter 会在导航提交后正确包裹 startViewTransition（修掉手写时序导致的闪烁），
@@ -52,13 +59,13 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
     (e: React.MouseEvent<SVGRectElement>) => {
       if (!svgRef.current || n === 0) return;
       const rect = svgRef.current.getBoundingClientRect();
-      const relX = (e.clientX - rect.left) / rect.width; // 0..1
-      const svgX = relX * SVG_W;
-      const frac = (svgX - PAD_X) / (plotW || 1);
-      const idx = Math.round(Math.max(0, Math.min(1, frac)) * (n - 1));
+      const relX = (e.clientX - rect.left) / rect.width;
+      const idx = Math.round(Math.max(0, Math.min(1, (relX * SVG_W - PAD_X) / (plotW || 1))) * (n - 1));
       setHoverIdx(idx);
+      const svgY = ((e.clientY - rect.top) / rect.height) * SVG_H;
+      focus.onHover(hitStream(geom, idx, svgY));
     },
-    [n, plotW],
+    [n, plotW, geom, focus],
   );
 
   const handleClick = useCallback(
@@ -107,13 +114,18 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
         aria-label="Keyword stream chart"
       >
         {/* Stream paths */}
-        {paths.map((p) => (
+        {paths.map((p, i) => (
           <path
             key={p.term}
             d={p.d}
             fill={p.color}
             fillOpacity={0.88}
             stroke="none"
+            style={{
+              opacity: focus.isolatedIdx === i ? 1 - focus.progress : 1 - 0.92 * focus.progress,
+              filter: focus.progress > 0 && focus.isolatedIdx !== i ? 'saturate(0.5)' : undefined,
+              transition: 'opacity .12s linear',
+            }}
           />
         ))}
 
@@ -137,11 +149,25 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
           height={SVG_H}
           fill="transparent"
           onMouseMove={handleMouseMove}
-          onMouseLeave={() => setHoverIdx(anchorIdx)}
+          onMouseLeave={() => { setHoverIdx(anchorIdx); focus.onLeave(); }}
           onClick={clickable ? handleClick : undefined}
           style={{ cursor: clickable ? 'pointer' : 'crosshair' }}
         />
       </svg>
+
+      {enableIsolate && focus.isolatedIdx >= 0 && (
+        <StreamFocus
+          term={series.streams[focus.isolatedIdx].term}
+          color={series.streams[focus.isolatedIdx].color}
+          values={series.streams[focus.isolatedIdx].values}
+          stackedTop={geom.tops[focus.isolatedIdx]}
+          stackedBot={geom.bots[focus.isolatedIdx]}
+          xs={geom.xs}
+          periods={series.periods}
+          progress={focus.progress}
+          hoverIdx={hoverIdx}
+        />
+      )}
 
       {/* Scrubber 日期标签（条形态：跟随扫描位置显示当前/目标日期） */}
       {!showReadout && hoverPeriod && (
@@ -167,7 +193,7 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
       )}
 
       {/* Readout panel */}
-      {showReadout && (
+      {showReadout && focus.progress < 0.02 && (
       <div
         style={{
           position: 'absolute',
