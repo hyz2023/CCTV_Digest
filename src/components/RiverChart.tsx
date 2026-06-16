@@ -6,6 +6,7 @@ import type { StreamSeries } from '@/viz/series';
 import { computeStreamPaths } from '@/viz/stream';
 import { levelOf, trendOf } from '@/viz/readout';
 import type { Level, Trend } from '@/viz/readout';
+import { anchorIndex } from '@/viz/anchor';
 
 const SVG_W = 1000;
 const SVG_H = 600;
@@ -17,11 +18,14 @@ const LEVEL_COLOR: Record<Level, string> = { '强': '#e0436b', '中': '#fbbf24',
 
 interface Props {
   series: StreamSeries;
+  showReadout?: boolean;
+  currentDate?: string;
 }
 
-export default function RiverChart({ series }: Props) {
+export default function RiverChart({ series, showReadout = true, currentDate }: Props) {
   const lastIdx = Math.max(0, series.periods.length - 1);
-  const [hoverIdx, setHoverIdx] = useState<number>(lastIdx);
+  const anchorIdx = anchorIndex(series.periods, currentDate, lastIdx);
+  const [hoverIdx, setHoverIdx] = useState<number>(anchorIdx);
   const svgRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
@@ -94,7 +98,7 @@ export default function RiverChart({ series }: Props) {
   const hoverPeriod = series.periods[hoverIdx] ?? '';
 
   return (
-    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'radial-gradient(ellipse at 50% 40%, #0e1520 0%, #060a10 100%)' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', viewTransitionName: 'river-stream', background: 'radial-gradient(ellipse at 50% 40%, #0e1520 0%, #060a10 100%)' }}>
       {/* Main SVG */}
       <svg
         ref={svgRef}
@@ -134,13 +138,14 @@ export default function RiverChart({ series }: Props) {
           height={SVG_H}
           fill="transparent"
           onMouseMove={handleMouseMove}
-          onMouseLeave={() => setHoverIdx(lastIdx)}
+          onMouseLeave={() => setHoverIdx(anchorIdx)}
           onClick={clickable ? handleClick : undefined}
           style={{ cursor: clickable ? 'pointer' : 'crosshair' }}
         />
       </svg>
 
       {/* Readout panel */}
+      {showReadout && (
       <div
         style={{
           position: 'absolute',
@@ -179,6 +184,7 @@ export default function RiverChart({ series }: Props) {
           </div>
         ) : null}
       </div>
+      )}
     </div>
   );
 }
