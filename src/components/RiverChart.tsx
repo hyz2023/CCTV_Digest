@@ -11,29 +11,27 @@ const PAD_X = 16;
 
 interface Props {
   series: StreamSeries;
-  // period (YYYY-MM) → 可点的播出日 (YYYY-MM-DD)
-  periodDate?: Record<string, string>;
 }
 
-export default function RiverChart({ series, periodDate }: Props) {
+export default function RiverChart({ series }: Props) {
   const lastIdx = Math.max(0, series.periods.length - 1);
   const [hoverIdx, setHoverIdx] = useState<number>(lastIdx);
   const svgRef = useRef<SVGSVGElement>(null);
   const router = useRouter();
 
-  // 点击某个时间位置 → 带动效进入该月最近一天的每日解读
+  // periods 现在是真实日期（YYYY-MM-DD）→ 点击直接进当天
   const navigateToIdx = useCallback(
     (idx: number) => {
-      const date = periodDate?.[series.periods[idx]];
+      const date = series.periods[idx];
       if (!date) return;
       const go = () => router.push(`/day/${date}`);
       const d = document as Document & { startViewTransition?: (cb: () => void) => void };
       if (typeof d.startViewTransition === 'function') d.startViewTransition(go);
       else go();
     },
-    [periodDate, series.periods, router],
+    [series.periods, router],
   );
-  const clickable = !!periodDate && Object.keys(periodDate).length > 0;
+  const clickable = series.periods.length > 0;
 
   const paths = computeStreamPaths(series.streams, { width: SVG_W, height: SVG_H, padX: PAD_X });
 
@@ -81,13 +79,13 @@ export default function RiverChart({ series, periodDate }: Props) {
   const hoverPeriod = series.periods[hoverIdx] ?? '';
 
   return (
-    <div style={{ position: 'relative', width: '100%', background: 'radial-gradient(ellipse at 50% 40%, #0e1520 0%, #060a10 100%)' }}>
+    <div style={{ position: 'relative', width: '100%', height: '100%', background: 'radial-gradient(ellipse at 50% 40%, #0e1520 0%, #060a10 100%)' }}>
       {/* Main SVG */}
       <svg
         ref={svgRef}
         viewBox={`0 0 ${SVG_W} ${SVG_H}`}
         preserveAspectRatio="none"
-        style={{ display: 'block', width: '100%', height: 'auto' }}
+        style={{ display: 'block', width: '100%', height: '100%' }}
         aria-label="Keyword stream chart"
       >
         {/* Stream paths */}
