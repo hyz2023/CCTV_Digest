@@ -40,3 +40,14 @@ body {
 @media (prefers-reduced-motion: reduce) {
   .rise-in { animation: none; }
 }
+
+/* 河流条 opacity 入场（不加位移，避免与 view-transition 形变冲突） */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.fade-in { animation: fadeIn 0.5s ease both; }
+@media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } }
+
+/* 河流命名形变（首页全屏 ↔ 当日页顶部条），仅支持的浏览器生效 */
+::view-transition-group(river-stream) {
+  animation-duration: 0.6s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
