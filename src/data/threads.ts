@@ -1,6 +1,7 @@
 import { getDb } from '@/db/client';
 import { thread, threadPoint } from '@/db/schema';
 import type { StreamSeries } from '@/viz/series';
+import type { TermGroup } from '@/viz/dailyStream';
 
 export interface ThreadPointFull { threadName: string; color: string; period: string; intensity: number }
 
@@ -30,5 +31,21 @@ export async function getThreadStreamSeries(): Promise<StreamSeries | null> {
     return threadPointsToStreamSeries(full);
   } catch {
     return null;
+  }
+}
+
+// 主线 → 词组（name/color/memberTerms），供首页日级聚合用。
+export async function getThreads(): Promise<TermGroup[]> {
+  try {
+    const rows = await getDb().select({ name: thread.name, color: thread.color, meta: thread.meta }).from(thread);
+    return rows
+      .map((r) => ({
+        name: r.name,
+        color: r.color ?? '#888',
+        terms: (r.meta as { memberTerms?: string[] } | null)?.memberTerms ?? [],
+      }))
+      .filter((g) => g.terms.length > 0);
+  } catch {
+    return [];
   }
 }
