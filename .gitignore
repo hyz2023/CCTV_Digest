@@ -43,3 +43,6 @@ next-env.d.ts
 
 # Brainstorm visual companion (local only)
 .superpowers/
+
+# Playwright MCP artifacts
+.playwright-mcp/
