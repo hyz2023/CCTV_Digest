@@ -1,5 +1,5 @@
 {
-  "id": "0d075e95-c1fb-408e-9b07-5e5587ac3709",
+  "id": "4613337b-7d19-4027-902f-b70d502f0b40",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -126,6 +126,12 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true
+        },
+        "title": {
+          "name": "title",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         },
         "length_proxy": {
           "name": "length_proxy",
@@ -561,9 +567,9 @@
           "primaryKey": false,
           "notNull": true
         },
-        "tifa_id": {
-          "name": "tifa_id",
-          "type": "integer",
+        "term": {
+          "name": "term",
+          "type": "text",
           "primaryKey": false,
           "notNull": true
         },

@@ -20,6 +20,7 @@ CREATE TABLE "item" (
 	"day" date NOT NULL,
 	"ord" integer NOT NULL,
 	"segment" text NOT NULL,
+	"title" text,
 	"length_proxy" integer,
 	"text" text,
 	"summary" text
@@ -99,7 +100,7 @@ CREATE TABLE "tifa" (
 CREATE TABLE "tifa_mention" (
 	"id" serial PRIMARY KEY NOT NULL,
 	"day" date NOT NULL,
-	"tifa_id" integer NOT NULL,
+	"term" text NOT NULL,
 	"count" integer DEFAULT 1 NOT NULL,
 	"context" text
 );
