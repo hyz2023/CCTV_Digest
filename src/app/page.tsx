@@ -1,12 +1,15 @@
 import RiverChart from '@/components/RiverChart';
-import { getMentions } from '@/data/queries';
+import { getMentions, getBroadcastDates } from '@/data/queries';
 import { buildStreamSeries } from '@/viz/series';
+import { buildPeriodDateMap } from '@/viz/period';
 import { getThreadStreamSeries } from '@/data/threads';
 
 export const dynamic = 'force-dynamic';
 
 export default async function Home() {
-  const series = (await getThreadStreamSeries()) ?? buildStreamSeries(await getMentions(), { topN: 6 });
+  const [threadSeries, dates] = await Promise.all([getThreadStreamSeries(), getBroadcastDates()]);
+  const series = threadSeries ?? buildStreamSeries(await getMentions(), { topN: 6 });
+  const periodDate = buildPeriodDateMap(dates);
   return (
     <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECEAE3' }}>
       <header style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '14px 28px', borderBottom: '1px solid #1b1b26' }}>
@@ -22,7 +25,7 @@ export default async function Home() {
         <p style={{ color: '#9a9aac', fontSize: 14, maxWidth: 620 }}>每条河流是一条发展主线，宽度=被强调的力度。移动鼠标扫描时间，读取当月横截面。</p>
       </section>
       <div style={{ height: '60vh', minHeight: 420 }}>
-        <RiverChart series={series} />
+        <RiverChart series={series} periodDate={periodDate} />
       </div>
     </main>
   );

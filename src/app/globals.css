@@ -28,3 +28,15 @@ body {
 .serif {
   font-family: Georgia, "Songti SC", serif;
 }
+
+/* "每日解读上浮淡入" 入场动效（从 River 点击进入时） */
+@keyframes riseIn {
+  from { opacity: 0; transform: translateY(18px); }
+  to { opacity: 1; transform: none; }
+}
+.rise-in {
+  animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@media (prefers-reduced-motion: reduce) {
+  .rise-in { animation: none; }
+}

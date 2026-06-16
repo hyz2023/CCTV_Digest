@@ -40,7 +40,7 @@ export default function DailyRead({ date, crossSection, items, signals, radar }:
   const maxVal = Math.max(1, ...crossSection.entries.map((e) => e.value));
 
   return (
-    <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
+    <main className="rise-in" style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
       {/* Nav */}
       <header style={NAV_STYLE}>
         <div style={{ fontWeight: 800, letterSpacing: 1 }}>联播 · 脉络</div>

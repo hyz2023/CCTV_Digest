@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
+import { useRouter } from 'next/navigation';
 import type { StreamSeries } from '@/viz/series';
 import { computeStreamPaths } from '@/viz/stream';
 
@@ -10,12 +11,29 @@ const PAD_X = 16;
 
 interface Props {
   series: StreamSeries;
+  // period (YYYY-MM) → 可点的播出日 (YYYY-MM-DD)
+  periodDate?: Record<string, string>;
 }
 
-export default function RiverChart({ series }: Props) {
+export default function RiverChart({ series, periodDate }: Props) {
   const lastIdx = Math.max(0, series.periods.length - 1);
   const [hoverIdx, setHoverIdx] = useState<number>(lastIdx);
   const svgRef = useRef<SVGSVGElement>(null);
+  const router = useRouter();
+
+  // 点击某个时间位置 → 带动效进入该月最近一天的每日解读
+  const navigateToIdx = useCallback(
+    (idx: number) => {
+      const date = periodDate?.[series.periods[idx]];
+      if (!date) return;
+      const go = () => router.push(`/day/${date}`);
+      const d = document as Document & { startViewTransition?: (cb: () => void) => void };
+      if (typeof d.startViewTransition === 'function') d.startViewTransition(go);
+      else go();
+    },
+    [periodDate, series.periods, router],
+  );
+  const clickable = !!periodDate && Object.keys(periodDate).length > 0;
 
   const paths = computeStreamPaths(series.streams, { width: SVG_W, height: SVG_H, padX: PAD_X });
 
@@ -34,6 +52,18 @@ export default function RiverChart({ series }: Props) {
       setHoverIdx(idx);
     },
     [n, plotW],
+  );
+
+  const handleClick = useCallback(
+    (e: React.MouseEvent<SVGRectElement>) => {
+      if (!svgRef.current || n === 0) return;
+      const rect = svgRef.current.getBoundingClientRect();
+      const relX = (e.clientX - rect.left) / rect.width;
+      const frac = (relX * SVG_W - PAD_X) / (plotW || 1);
+      const idx = Math.round(Math.max(0, Math.min(1, frac)) * (n - 1));
+      navigateToIdx(idx);
+    },
+    [n, plotW, navigateToIdx],
   );
 
   // Scrubber X position in SVG coords
@@ -92,7 +122,8 @@ export default function RiverChart({ series }: Props) {
           fill="transparent"
           onMouseMove={handleMouseMove}
           onMouseLeave={() => setHoverIdx(lastIdx)}
-          style={{ cursor: 'crosshair' }}
+          onClick={clickable ? handleClick : undefined}
+          style={{ cursor: clickable ? 'pointer' : 'crosshair' }}
         />
       </svg>
 
@@ -136,6 +167,11 @@ export default function RiverChart({ series }: Props) {
             </div>
           </div>
         ))}
+        {clickable ? (
+          <div style={{ marginTop: '0.6rem', paddingTop: '0.5rem', borderTop: '1px solid rgba(255,255,255,0.1)', color: '#c99', fontSize: '0.7rem' }}>
+            点击进入当日解读 →
+          </div>
+        ) : null}
       </div>
     </div>
   );
