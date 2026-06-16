@@ -5,12 +5,23 @@ import type { ParsedTranscript } from './types';
 const ymd = (date: string) => date.replace(/-/g, '');
 
 const MIN_TEXT_LEN = 200;
-/** Reject a parsed transcript that is too short to be real (e.g. govopendata's
- *  200-with-error-body for a missing day), so the fallback chain continues. */
+const MIN_ITEMS = 3;
+// Markers seen in govopendata's site-nav/placeholder page served for a day that
+// hasn't been published yet (e.g. fetched before the 19:00 broadcast airs).
+const STUB_MARKERS = ['跳转到主要内容', 'Google AdSense'];
+/** Reject a parsed transcript that isn't a real broadcast — too short (error
+ *  body), a site nav/placeholder stub (unaired day), or too few items (stub/
+ *  error parse) — so the fallback chain continues and we never ingest garbage. */
 export function validateTranscript(t: ParsedTranscript): ParsedTranscript {
-  const len = t.text.trim().length;
-  if (len < MIN_TEXT_LEN) {
-    throw new Error(`transcript too short for ${t.date} from ${t.source} (${len} chars) — likely missing/error page`);
+  const text = t.text.trim();
+  if (text.length < MIN_TEXT_LEN) {
+    throw new Error(`transcript too short for ${t.date} from ${t.source} (${text.length} chars) — likely missing/error page`);
+  }
+  if (STUB_MARKERS.some((m) => text.includes(m))) {
+    throw new Error(`transcript for ${t.date} from ${t.source} looks like a site nav/placeholder stub — likely not yet published`);
+  }
+  if (t.items.length < MIN_ITEMS) {
+    throw new Error(`transcript for ${t.date} from ${t.source} has too few items (${t.items.length}) — likely a stub/error page`);
   }
   return t;
 }

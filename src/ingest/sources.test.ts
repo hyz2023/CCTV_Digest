@@ -3,7 +3,7 @@ import { fetchTranscript, validateTranscript } from './sources';
 import type { ParsedTranscript } from './types';
 
 const ok = (source: ParsedTranscript['source']): ParsedTranscript =>
-  ({ date: '2026-06-13', source, text: 'x'.repeat(300), items: ['a'] });
+  ({ date: '2026-06-13', source, text: 'x'.repeat(300), items: ['a', 'b', 'c'] });
 
 describe('fetchTranscript fallback chain', () => {
   it('returns govopendata when it succeeds (no fallback)', async () => {
@@ -45,5 +45,17 @@ describe('validateTranscript', () => {
   it('throws on a too-short (missing/error) page', () => {
     const t: ParsedTranscript = { date: '2026-06-13', source: 'govopendata', text: '对不起，无此页面', items: [] };
     expect(() => validateTranscript(t)).toThrow(/too short/);
+  });
+  it('throws on a site nav/placeholder stub (unaired day)', () => {
+    // govopendata returns a nav stub before the broadcast airs
+    const t: ParsedTranscript = {
+      date: '2026-06-16', source: 'govopendata',
+      text: '跳转到主要内容 首页 新闻联播 ' + 'x'.repeat(300), items: ['a', 'b', 'c'],
+    };
+    expect(() => validateTranscript(t)).toThrow(/stub|placeholder|nav/i);
+  });
+  it('throws when there are too few items (stub/error parse)', () => {
+    const t: ParsedTranscript = { date: '2026-06-16', source: 'govopendata', text: 'y'.repeat(300), items: ['只有一条'] };
+    expect(() => validateTranscript(t)).toThrow(/too few items/);
   });
 });
