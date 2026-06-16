@@ -1,4 +1,4 @@
-import { eq } from 'drizzle-orm';
+import { eq, sql } from 'drizzle-orm';
 import { getDb } from '@/db/client';
 import { item, tifa, tifaMention, sectorSignal, broadcastDay } from '@/db/schema';
 import { buildExtractionRows, type ExtractionRows, type SegmentStats } from './rows';
@@ -13,15 +13,18 @@ export interface PersistDeps {
 }
 
 const DEFAULT_DEPS: PersistDeps = {
-  insertItems: async (rows) => { if (rows.length) await getDb().insert(item).values(rows); },
+  insertItems: async (rows) => { if (rows.length) await getDb().insert(item).values(rows).onConflictDoNothing(); },
   upsertTifa: async (day, terms) => {
     if (!terms.length) return;
     await getDb().insert(tifa)
       .values(terms.map((term) => ({ term, firstSeen: day })))
-      .onConflictDoNothing({ target: tifa.term });
+      .onConflictDoUpdate({
+        target: tifa.term,
+        set: { firstSeen: sql`least(${tifa.firstSeen}, excluded.first_seen)` },
+      });
   },
-  insertTifaMentions: async (rows) => { if (rows.length) await getDb().insert(tifaMention).values(rows); },
-  insertSectorSignals: async (rows) => { if (rows.length) await getDb().insert(sectorSignal).values(rows); },
+  insertTifaMentions: async (rows) => { if (rows.length) await getDb().insert(tifaMention).values(rows).onConflictDoNothing(); },
+  insertSectorSignals: async (rows) => { if (rows.length) await getDb().insert(sectorSignal).values(rows).onConflictDoNothing(); },
   markExtracted: async (day, stats) => {
     await getDb().update(broadcastDay).set({ status: 'extracted', segmentStats: stats }).where(eq(broadcastDay.date, day));
   },

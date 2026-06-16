@@ -23,7 +23,8 @@ CREATE TABLE "item" (
 	"title" text,
 	"length_proxy" integer,
 	"text" text,
-	"summary" text
+	"summary" text,
+	CONSTRAINT "item_day_ord_unique" UNIQUE("day","ord")
 );
 --> statement-breakpoint
 CREATE TABLE "pipeline_run" (
@@ -54,7 +55,8 @@ CREATE TABLE "sector_signal" (
 	"day" date NOT NULL,
 	"sector" text NOT NULL,
 	"polarity" text NOT NULL,
-	"strength" real
+	"strength" real,
+	CONSTRAINT "sector_signal_day_sector_unique" UNIQUE("day","sector")
 );
 --> statement-breakpoint
 CREATE TABLE "stage_config" (
@@ -102,5 +104,6 @@ CREATE TABLE "tifa_mention" (
 	"day" date NOT NULL,
 	"term" text NOT NULL,
 	"count" integer DEFAULT 1 NOT NULL,
-	"context" text
+	"context" text,
+	CONSTRAINT "tifa_mention_day_term_unique" UNIQUE("day","term")
 );

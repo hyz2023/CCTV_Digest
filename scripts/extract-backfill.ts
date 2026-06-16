@@ -1,11 +1,11 @@
-import { eq } from 'drizzle-orm';
+import { asc, eq } from 'drizzle-orm';
 import { getDb } from '@/db/client';
 import { broadcastDay } from '@/db/schema';
 import { extractDay } from '@/extract/run';
 
 async function main() {
   const rows = await getDb().select({ date: broadcastDay.date })
-    .from(broadcastDay).where(eq(broadcastDay.status, 'ingested'));
+    .from(broadcastDay).where(eq(broadcastDay.status, 'ingested')).orderBy(asc(broadcastDay.date));
   let ok = 0, fail = 0;
   for (const { date } of rows) {
     try { await extractDay(date); ok++; console.log(`✓ ${date}`); }

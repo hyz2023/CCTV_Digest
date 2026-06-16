@@ -32,8 +32,9 @@ const DEFAULT_DEPS: ExtractRunDeps = {
 
 export async function extractDay(date: string, deps: ExtractRunDeps = DEFAULT_DEPS): Promise<{ date: string; skipped: boolean }> {
   const day = await deps.getDay(date);
-  if (!day || !day.blobUrl) throw new Error(`day ${date} is not ingested (no transcript)`);
+  if (!day) throw new Error(`day ${date} is not ingested (no transcript)`);
   if (shouldSkipExtraction(day)) return { date, skipped: true };
+  if (!day.blobUrl) throw new Error(`day ${date} has no transcript blob`);
   const text = await deps.loadText(day.blobUrl);
   const ex = await deps.extract(text);
   await deps.persist(date, ex);

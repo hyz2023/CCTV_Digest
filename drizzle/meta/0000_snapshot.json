@@ -1,5 +1,5 @@
 {
-  "id": "4613337b-7d19-4027-902f-b70d502f0b40",
+  "id": "0ea3e383-749c-40e6-8e05-134a11e5346c",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -155,7 +155,16 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "item_day_ord_unique": {
+          "name": "item_day_ord_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "day",
+            "ord"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -327,7 +336,16 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "sector_signal_day_sector_unique": {
+          "name": "sector_signal_day_sector_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "day",
+            "sector"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -590,7 +608,16 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "tifa_mention_day_term_unique": {
+          "name": "tifa_mention_day_term_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "day",
+            "term"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

@@ -7,6 +7,7 @@ import {
   serial,
   integer,
   real,
+  unique,
 } from 'drizzle-orm/pg-core';
 
 // ---------------------------------------------------------------------------
@@ -33,7 +34,9 @@ export const item = pgTable('item', {
   lengthProxy: integer('length_proxy'),
   text: text('text'),
   summary: text('summary'),
-});
+}, (t) => ({
+  dayOrdUnique: unique('item_day_ord_unique').on(t.day, t.ord),
+}));
 
 // ---------------------------------------------------------------------------
 // tifa  (Topic / Issue / Figure / Acronym)
@@ -54,7 +57,9 @@ export const tifaMention = pgTable('tifa_mention', {
   term: text('term').notNull(), // denormalized natural key; tifa table holds metadata (first_seen/aliases)
   count: integer('count').notNull().default(1),
   context: text('context'),
-});
+}, (t) => ({
+  dayTermUnique: unique('tifa_mention_day_term_unique').on(t.day, t.term),
+}));
 
 // ---------------------------------------------------------------------------
 // sector_signal
@@ -65,7 +70,9 @@ export const sectorSignal = pgTable('sector_signal', {
   sector: text('sector').notNull(),
   polarity: text('polarity').notNull(),
   strength: real('strength'),
-});
+}, (t) => ({
+  daySectorUnique: unique('sector_signal_day_sector_unique').on(t.day, t.sector),
+}));
 
 // ---------------------------------------------------------------------------
 // daily_interpretation

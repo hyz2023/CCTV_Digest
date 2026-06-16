@@ -23,5 +23,6 @@ describe('persistExtraction', () => {
     expect(deps.upsertTifa).toHaveBeenCalledWith('2026-06-13', ['新质生产力']);
     expect(deps.insertSectorSignals).toHaveBeenCalledOnce();
     expect(calls).toContain('mark');
+    expect(calls).toEqual(['tifa', 'items', 'mentions', 'sectors', 'mark']);
   });
 });

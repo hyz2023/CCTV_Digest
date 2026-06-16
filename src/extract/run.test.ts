@@ -37,4 +37,10 @@ describe('extractDay', () => {
     const deps = { getDay: vi.fn(async () => undefined), loadText: vi.fn(), extract: vi.fn(), persist: vi.fn() };
     await expect(extractDay('2026-06-13', deps)).rejects.toThrow(/not ingested/i);
   });
+  it('skips an extracted day even when blobUrl is null', async () => {
+    const deps = { getDay: vi.fn(async () => ({ status: 'extracted', blobUrl: null })), loadText: vi.fn(), extract: vi.fn(), persist: vi.fn() };
+    const r = await extractDay('2026-06-13', deps);
+    expect(r.skipped).toBe(true);
+    expect(deps.extract).not.toHaveBeenCalled();
+  });
 });
