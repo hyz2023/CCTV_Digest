@@ -65,7 +65,7 @@ export default function RiverChart({ series, showReadout = true, currentDate, en
       const svgY = ((e.clientY - rect.top) / rect.height) * SVG_H;
       focus.onHover(hitStream(geom, idx, svgY));
     },
-    [n, plotW, geom, focus],
+    [n, plotW, geom, focus.onHover],
   );
 
   const handleClick = useCallback(
@@ -124,7 +124,6 @@ export default function RiverChart({ series, showReadout = true, currentDate, en
             style={{
               opacity: focus.isolatedIdx === i ? 1 - focus.progress : 1 - 0.92 * focus.progress,
               filter: focus.progress > 0 && focus.isolatedIdx !== i ? 'saturate(0.5)' : undefined,
-              transition: 'opacity .12s linear',
             }}
           />
         ))}

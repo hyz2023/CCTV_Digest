@@ -6,6 +6,7 @@ const EASE = 0.09;
 export function useStreamFocus(enabled: boolean) {
   const [isolatedIdx, setIsolatedIdx] = useState(-1);
   const [progress, setProgress] = useState(0);
+  const isolatedRef = useRef(-1); // 镜像 isolatedIdx，供事件回调同步读取（避免 stale-closure 竞态）
   const progressRef = useRef(0);
   const targetRef = useRef(0);
   const rafRef = useRef<number | null>(null);
@@ -26,7 +27,7 @@ export function useStreamFocus(enabled: boolean) {
     progressRef.current = p;
     setProgress(p);
     if (p !== t) { rafRef.current = requestAnimationFrame(tick); }
-    else { rafRef.current = null; if (t === 0) setIsolatedIdx(-1); }
+    else { rafRef.current = null; if (t === 0) { isolatedRef.current = -1; setIsolatedIdx(-1); } }
   }, []);
 
   const drive = useCallback((t: number) => {
@@ -36,13 +37,13 @@ export function useStreamFocus(enabled: boolean) {
 
   const onHover = useCallback((streamIdx: number) => {
     if (!enabled) return;
-    if (isolatedIdx >= 0 || progressRef.current > 0) return;
+    if (isolatedRef.current >= 0 || progressRef.current > 0) return;
     if (streamIdx === hoveredRef.current) return;
     hoveredRef.current = streamIdx;
     if (dwellRef.current) clearTimeout(dwellRef.current);
     if (streamIdx < 0) return;
-    dwellRef.current = setTimeout(() => { setIsolatedIdx(streamIdx); drive(1); }, DWELL_MS);
-  }, [enabled, isolatedIdx, drive]);
+    dwellRef.current = setTimeout(() => { isolatedRef.current = streamIdx; setIsolatedIdx(streamIdx); drive(1); }, DWELL_MS);
+  }, [enabled, drive]);
 
   const onLeave = useCallback(() => {
     if (dwellRef.current) clearTimeout(dwellRef.current);
