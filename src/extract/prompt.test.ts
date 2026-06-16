@@ -14,4 +14,9 @@ describe('buildExtractionPrompt', () => {
   it('asks to read it as signal, not restate facts', () => {
     expect(p).toMatch(/信号|编辑选择|不要复述|不要臆造|忠实/);
   });
+  it('pins the exact JSON field names to avoid `name` drift', () => {
+    expect(p).toContain('term');
+    expect(p).toContain('sector');
+    expect(p).toMatch(/不要用 name 代替/);
+  });
 });

@@ -1,6 +1,6 @@
 import { generateObject } from 'ai';
 import { loadStageConfig } from '@/llm/loadStageConfig';
-import { getModel } from '@/llm/model';
+import { getModel, JSON_SYSTEM } from '@/llm/model';
 import { normalizeUsage, recordLlmRun } from '@/llm/usage';
 import { buildThreadPrompt, type ThreadPromptInput } from './prompt';
 import { ThreadSetSchema, type ThreadSet } from './schema';
@@ -10,7 +10,7 @@ export interface SynthesizeDeps { generate: (input: ThreadPromptInput) => Promis
 const DEFAULT_DEPS: SynthesizeDeps = {
   generate: async (input) => {
     const cfg = await loadStageConfig('thread');
-    const { object, usage } = await generateObject({ model: getModel(cfg), schema: ThreadSetSchema, prompt: buildThreadPrompt(input) });
+    const { object, usage } = await generateObject({ model: getModel(cfg), schema: ThreadSetSchema, system: JSON_SYSTEM, prompt: buildThreadPrompt(input) });
     await recordLlmRun({ stage: 'thread', provider: cfg.provider, model: cfg.model, usage: normalizeUsage(usage) });
     return object;
   },

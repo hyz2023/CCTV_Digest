@@ -1,6 +1,6 @@
 import { generateObject } from 'ai';
 import { loadStageConfig } from '@/llm/loadStageConfig';
-import { getModel } from '@/llm/model';
+import { getModel, JSON_SYSTEM } from '@/llm/model';
 import { normalizeUsage, recordLlmRun } from '@/llm/usage';
 import { buildInterpretationPrompt, type InterpInput } from './prompt';
 import { DeepInterpretationSchema, type DeepInterpretation } from './schema';
@@ -13,6 +13,7 @@ const DEFAULT_DEPS: InterpretDeps = {
     const { object, usage } = await generateObject({
       model: getModel(cfg),
       schema: DeepInterpretationSchema,
+      system: JSON_SYSTEM,
       prompt: buildInterpretationPrompt(input),
     });
     await recordLlmRun({ day: input.date, stage: 'deep', provider: cfg.provider, model: cfg.model, usage: normalizeUsage(usage) });
