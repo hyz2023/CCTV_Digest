@@ -29,17 +29,16 @@ export function buildStreamSeries(mentions: Mention[], opts: { topN?: number } =
 
 export interface CrossSection { period: string; entries: { term: string; value: number }[] }
 export function buildCrossSection(mentions: Mention[], date: string, opts: { topN?: number } = {}): CrossSection {
-  const period = month(date);
   const totals = new Map<string, number>();
   for (const m of mentions) {
-    if (month(m.day) !== period) continue;
+    if (m.day !== date) continue;
     totals.set(m.term, (totals.get(m.term) ?? 0) + m.count);
   }
   const entries = [...totals.entries()]
     .map(([term, value]) => ({ term, value }))
     .sort((a, b) => b.value - a.value || a.term.localeCompare(b.term))
     .slice(0, opts.topN ?? 8);
-  return { period, entries };
+  return { period: date, entries };
 }
 
 export interface KeywordSeries { term: string; points: { period: string; value: number }[] }

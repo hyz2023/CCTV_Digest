@@ -27,12 +27,16 @@ describe('buildStreamSeries', () => {
   });
 });
 
-describe('buildCrossSection', () => {
-  it('returns per-term intensity for the period containing a date, sorted desc', () => {
-    const xs = buildCrossSection(mentions, '2026-02-15', { topN: 3 });
-    expect(xs.period).toBe('2026-02');
+describe('buildCrossSection (daily)', () => {
+  it('只取精确当天的各提法强度，降序', () => {
+    const xs = buildCrossSection([
+      { day: '2026-02-15', term: 'A', count: 2 },
+      { day: '2026-02-15', term: 'B', count: 5 },
+      { day: '2026-02-16', term: 'A', count: 9 },
+    ], '2026-02-15', { topN: 3 });
+    expect(xs.period).toBe('2026-02-15');
     expect(xs.entries[0]).toMatchObject({ term: 'B', value: 5 });
-    expect(xs.entries[1]).toMatchObject({ term: 'A', value: 4 });
+    expect(xs.entries[1]).toMatchObject({ term: 'A', value: 2 });
   });
 });
 
