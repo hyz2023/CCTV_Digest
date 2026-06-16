@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback } from 'react';
-import { useRouter } from 'next/navigation';
+import { useTransitionRouter } from 'next-view-transitions';
 import type { StreamSeries } from '@/viz/series';
 import { computeStreamPaths } from '@/viz/stream';
 import { levelOf, trendOf } from '@/viz/readout';
@@ -27,17 +27,16 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
   const anchorIdx = anchorIndex(series.periods, currentDate, lastIdx);
   const [hoverIdx, setHoverIdx] = useState<number>(anchorIdx);
   const svgRef = useRef<SVGSVGElement>(null);
-  const router = useRouter();
+  const router = useTransitionRouter();
 
-  // periods 现在是真实日期（YYYY-MM-DD）→ 点击直接进当天
+  // periods 现在是真实日期（YYYY-MM-DD）→ 点击直接进当天。
+  // useTransitionRouter 会在导航提交后正确包裹 startViewTransition（修掉手写时序导致的闪烁），
+  // 河流靠 view-transition-name: river-stream 做压缩形变。
   const navigateToIdx = useCallback(
     (idx: number) => {
       const date = series.periods[idx];
       if (!date) return;
-      const go = () => router.push(`/day/${date}`);
-      const d = document as Document & { startViewTransition?: (cb: () => void) => void };
-      if (typeof d.startViewTransition === 'function') d.startViewTransition(go);
-      else go();
+      router.push(`/day/${date}`);
     },
     [series.periods, router],
   );
