@@ -1,9 +1,9 @@
 export interface Stream { term: string; color: string; values: number[] }
 export interface StreamPath { term: string; color: string; d: string }
 export interface Dims { width: number; height: number; padX?: number }
+export interface Pt { x: number; y: number }
 
-interface Pt { x: number; y: number }
-function curve(points: Pt[], move: boolean): string {
+export function curve(points: Pt[], move: boolean): string {
   if (points.length === 0) return '';
   let d = move ? `M ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}` : `L ${points[0].x.toFixed(1)} ${points[0].y.toFixed(1)}`;
   for (let i = 0; i < points.length - 1; i++) {
@@ -15,17 +15,19 @@ function curve(points: Pt[], move: boolean): string {
   return d;
 }
 
-export function computeStreamPaths(streams: Stream[], dims: Dims): StreamPath[] {
-  if (streams.length === 0) return [];
+export interface StreamGeometry {
+  xs: number[]; tops: Pt[][]; bots: Pt[][]; cy: number; scaleY: number; maxTotal: number;
+}
+
+export function computeStreamGeometry(streams: Stream[], dims: Dims): StreamGeometry {
   const padX = dims.padX ?? 8;
-  const n = streams[0].values.length;
+  const n = streams[0]?.values.length ?? 0;
   const plotW = dims.width - 2 * padX;
   const xs = Array.from({ length: n }, (_, i) => padX + (n === 1 ? plotW / 2 : (plotW * i) / (n - 1)));
   const totals = Array.from({ length: n }, (_, i) => streams.reduce((s, st) => s + (st.values[i] ?? 0), 0));
   const maxTotal = Math.max(1, ...totals);
   const cy = dims.height * 0.5;
   const scaleY = (dims.height * 0.66) / maxTotal;
-
   const tops: Pt[][] = streams.map(() => []);
   const bots: Pt[][] = streams.map(() => []);
   for (let i = 0; i < n; i++) {
@@ -36,9 +38,15 @@ export function computeStreamPaths(streams: Stream[], dims: Dims): StreamPath[] 
       bots[si].push({ x: xs[i], y: top });
     });
   }
+  return { xs, tops, bots, cy, scaleY, maxTotal };
+}
+
+export function computeStreamPaths(streams: Stream[], dims: Dims): StreamPath[] {
+  if (streams.length === 0) return [];
+  const geom = computeStreamGeometry(streams, dims);
   return streams.map((st, si) => ({
     term: st.term,
     color: st.color,
-    d: `${curve(tops[si], true)} ${curve([...bots[si]].reverse(), false)} Z`,
+    d: `${curve(geom.tops[si], true)} ${curve([...geom.bots[si]].reverse(), false)} Z`,
   }));
 }
