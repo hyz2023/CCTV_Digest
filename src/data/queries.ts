@@ -1,6 +1,6 @@
 import { getDb } from '@/db/client';
-import { tifaMention, sectorSignal, item, dailyInterpretation, radarEvent, broadcastDay } from '@/db/schema';
-import { eq, desc, sql } from 'drizzle-orm';
+import { tifaMention, sectorSignal, item, dailyInterpretation, radarEvent } from '@/db/schema';
+import { eq, desc } from 'drizzle-orm';
 import { SAMPLE_MENTIONS, SAMPLE_SECTORS } from '@/viz/sample';
 import type { Mention, SectorSig } from '@/viz/series';
 
@@ -32,20 +32,6 @@ export async function getItemsForDay(date: string): Promise<DayItem[]> {
   try {
     return await getDb().select({ ord: item.ord, segment: item.segment, title: item.title, summary: item.summary })
       .from(item).where(eq(item.day, date)).orderBy(item.ord) as DayItem[];
-  } catch {
-    return [];
-  }
-}
-
-// 已分析完成的播出日（YYYY-MM-DD，升序）。用于把月度 River 映射到可点的日子。
-export async function getBroadcastDates(): Promise<string[]> {
-  try {
-    const rows = await getDb()
-      .select({ d: sql<string>`to_char(${broadcastDay.date}, 'YYYY-MM-DD')` })
-      .from(broadcastDay)
-      .where(eq(broadcastDay.status, 'analyzed'))
-      .orderBy(broadcastDay.date);
-    return rows.map((r) => r.d).filter(Boolean);
   } catch {
     return [];
   }
