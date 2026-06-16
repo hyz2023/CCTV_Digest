@@ -1,6 +1,7 @@
 import { generateObject } from 'ai';
 import { loadStageConfig } from '@/llm/loadStageConfig';
 import { getModel } from '@/llm/model';
+import { normalizeUsage, recordLlmRun } from '@/llm/usage';
 import { buildExtractionPrompt } from './prompt';
 import { ExtractionSchema, type Extraction } from './schema';
 
@@ -11,11 +12,12 @@ export interface ExtractDeps {
 const DEFAULT_DEPS: ExtractDeps = {
   generate: async (text) => {
     const cfg = await loadStageConfig('extraction');
-    const { object } = await generateObject({
+    const { object, usage } = await generateObject({
       model: getModel(cfg),
       schema: ExtractionSchema,
       prompt: buildExtractionPrompt(text),
     });
+    await recordLlmRun({ stage: 'extraction', provider: cfg.provider, model: cfg.model, usage: normalizeUsage(usage) });
     return object;
   },
 };

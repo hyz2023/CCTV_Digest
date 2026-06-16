@@ -55,7 +55,7 @@ export default async function AdminPage() {
           >
             <thead>
               <tr>
-                {['日期', '阶段', '状态', '错误', '创建时间'].map((h) => (
+                {['日期', '阶段', 'Tokens', '成本($)', '状态', '错误', '创建时间'].map((h) => (
                   <th
                     key={h}
                     style={{
@@ -78,7 +78,7 @@ export default async function AdminPage() {
               {runs.length === 0 ? (
                 <tr>
                   <td
-                    colSpan={5}
+                    colSpan={7}
                     style={{
                       padding: '1.5rem 0.75rem',
                       color: '#475569',
@@ -121,6 +121,28 @@ export default async function AdminPage() {
                       >
                         {r.stage}
                       </span>
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.5rem 0.75rem',
+                        borderBottom: '1px solid #1e2235',
+                        color: '#94a3b8',
+                        fontSize: '0.78rem',
+                        fontFamily: 'monospace',
+                      }}
+                    >
+                      {r.inputTokens != null ? `${r.inputTokens} / ${r.outputTokens ?? 0}` : '—'}
+                    </td>
+                    <td
+                      style={{
+                        padding: '0.5rem 0.75rem',
+                        borderBottom: '1px solid #1e2235',
+                        color: '#94a3b8',
+                        fontSize: '0.78rem',
+                        fontFamily: 'monospace',
+                      }}
+                    >
+                      {r.costUsd != null ? `$${r.costUsd.toFixed(4)}` : '—'}
                     </td>
                     <td
                       style={{

@@ -1,6 +1,7 @@
 import { generateObject } from 'ai';
 import { loadStageConfig } from '@/llm/loadStageConfig';
 import { getModel } from '@/llm/model';
+import { normalizeUsage, recordLlmRun } from '@/llm/usage';
 import { buildInterpretationPrompt, type InterpInput } from './prompt';
 import { DeepInterpretationSchema, type DeepInterpretation } from './schema';
 
@@ -9,11 +10,12 @@ export interface InterpretDeps { generate: (input: InterpInput) => Promise<DeepI
 const DEFAULT_DEPS: InterpretDeps = {
   generate: async (input) => {
     const cfg = await loadStageConfig('deep');
-    const { object } = await generateObject({
+    const { object, usage } = await generateObject({
       model: getModel(cfg),
       schema: DeepInterpretationSchema,
       prompt: buildInterpretationPrompt(input),
     });
+    await recordLlmRun({ day: input.date, stage: 'deep', provider: cfg.provider, model: cfg.model, usage: normalizeUsage(usage) });
     return object;
   },
 };
