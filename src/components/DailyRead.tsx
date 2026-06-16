@@ -57,7 +57,7 @@ export default function DailyRead({ date, crossSection, items, signals, radar, r
         className="fade-in"
         style={{ position: 'sticky', top: 0, zIndex: 5, height: '14vh', minHeight: 96, borderBottom: '1px solid #1b1b26' }}
       >
-        <RiverChart series={riverSeries} showReadout={false} currentDate={date} />
+        <RiverChart series={riverSeries} showReadout={false} currentDate={date} enableIsolate={false} />
         <div style={{ position: 'absolute', left: 14, bottom: 8, fontSize: 11, color: '#c99', pointerEvents: 'none' }}>
           当前 {date} · 扫描或点击切换日期
         </div>
