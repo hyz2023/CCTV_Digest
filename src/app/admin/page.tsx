@@ -1,9 +1,18 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { verifySession, ADMIN_COOKIE } from '@/auth/session';
 import { getStageConfigs, recentRuns, PROVIDERS } from '@/data/adminConfig';
 import AdminConfig from '@/components/AdminConfig';
 
 export const dynamic = 'force-dynamic';
 
 export default async function AdminPage() {
+  // 纵深防御：即使中间件（proxy.ts）将来配置失效，本页也独立校验会话。
+  const token = (await cookies()).get(ADMIN_COOKIE)?.value ?? '';
+  if (!(await verifySession(token, process.env.ADMIN_SECRET ?? ''))) {
+    redirect('/admin/login');
+  }
+
   const [configs, runs] = await Promise.all([getStageConfigs(), recentRuns()]);
 
   return (
