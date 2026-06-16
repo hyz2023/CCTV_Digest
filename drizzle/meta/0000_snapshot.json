@@ -1,5 +1,5 @@
 {
-  "id": "0ea3e383-749c-40e6-8e05-134a11e5346c",
+  "id": "e1366e8a-a767-4a9e-9cc8-350af978761f",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "7",
   "dialect": "postgresql",
@@ -94,7 +94,15 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "daily_interpretation_day_unique": {
+          "name": "daily_interpretation_day_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "day"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false
@@ -293,7 +301,17 @@
       "indexes": {},
       "foreignKeys": {},
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {},
+      "uniqueConstraints": {
+        "radar_event_day_type_target_unique": {
+          "name": "radar_event_day_type_target_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "day",
+            "type",
+            "target"
+          ]
+        }
+      },
       "policies": {},
       "checkConstraints": {},
       "isRLSEnabled": false

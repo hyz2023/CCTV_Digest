@@ -83,7 +83,9 @@ export const dailyInterpretation = pgTable('daily_interpretation', {
   topSignals: jsonb('top_signals'),
   model: text('model'),
   createdAt: timestamp('created_at').notNull().defaultNow(),
-});
+}, (t) => ({
+  dayUnique: unique('daily_interpretation_day_unique').on(t.day),
+}));
 
 // ---------------------------------------------------------------------------
 // radar_event
@@ -95,7 +97,9 @@ export const radarEvent = pgTable('radar_event', {
   target: text('target').notNull(),
   magnitude: real('magnitude'),
   detail: jsonb('detail'),
-});
+}, (t) => ({
+  dayTypeTargetUnique: unique('radar_event_day_type_target_unique').on(t.day, t.type, t.target),
+}));
 
 // ---------------------------------------------------------------------------
 // thread

@@ -12,7 +12,8 @@ CREATE TABLE "daily_interpretation" (
 	"day" date NOT NULL,
 	"top_signals" jsonb,
 	"model" text,
-	"created_at" timestamp DEFAULT now() NOT NULL
+	"created_at" timestamp DEFAULT now() NOT NULL,
+	CONSTRAINT "daily_interpretation_day_unique" UNIQUE("day")
 );
 --> statement-breakpoint
 CREATE TABLE "item" (
@@ -47,7 +48,8 @@ CREATE TABLE "radar_event" (
 	"type" text NOT NULL,
 	"target" text NOT NULL,
 	"magnitude" real,
-	"detail" jsonb
+	"detail" jsonb,
+	CONSTRAINT "radar_event_day_type_target_unique" UNIQUE("day","type","target")
 );
 --> statement-breakpoint
 CREATE TABLE "sector_signal" (
