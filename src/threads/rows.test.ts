@@ -16,7 +16,12 @@ const mentions = [
 ];
 
 describe('buildThreadRows', () => {
-  const r = buildThreadRows(set, mentions, ['#f00', '#0f0']);
+  const items = [
+    { id: 11, day: '2026-01-05', title: '关于 新质生产力 的报道', summary: '正文' },
+    { id: 12, day: '2026-01-06', title: '无关', summary: '无关内容' },
+  ];
+  const r = buildThreadRows(set, mentions, ['#f00', '#0f0'], items);
+
   it('emits one thread row per thread with color + status + read in meta', () => {
     expect(r.threads).toHaveLength(2);
     expect(r.threads[0]).toMatchObject({ name: '科技', status: 'active', color: '#f00' });
@@ -26,5 +31,12 @@ describe('buildThreadRows', () => {
     const tech = r.points.filter((p) => p.threadName === '科技');
     expect(tech).toContainEqual({ threadName: '科技', period: '2026-01', intensity: 5 });
     expect(tech).toContainEqual({ threadName: '科技', period: '2026-02', intensity: 4 });
+  });
+  it('builds evidence rows linking a thread to items whose text contains a member term', () => {
+    expect(r.evidence).toContainEqual({ threadName: '科技', day: '2026-01-05', itemId: 11 });
+    expect(r.evidence.some((e) => e.itemId === 12)).toBe(false);
+  });
+  it('works with no items (empty evidence)', () => {
+    expect(buildThreadRows(set, mentions, ['#f00', '#0f0']).evidence).toEqual([]);
   });
 });

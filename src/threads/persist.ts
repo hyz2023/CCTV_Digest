@@ -6,6 +6,7 @@ export interface ThreadPersistDeps {
   clearAll: () => Promise<void>;
   insertThreads: (rows: ThreadRows['threads']) => Promise<Map<string, number>>;
   insertPoints: (rows: { threadId: number; period: string; intensity: number }[]) => Promise<void>;
+  insertEvidence: (rows: { threadId: number; day: string; itemId: number }[]) => Promise<void>;
 }
 
 const DEFAULT_DEPS: ThreadPersistDeps = {
@@ -23,6 +24,7 @@ const DEFAULT_DEPS: ThreadPersistDeps = {
     return new Map(inserted.map((i) => [i.name, i.id]));
   },
   insertPoints: async (rows) => { if (rows.length) await getDb().insert(threadPoint).values(rows); },
+  insertEvidence: async (rows) => { if (rows.length) await getDb().insert(threadEvidence).values(rows); },
 };
 
 export async function persistThreads(rows: ThreadRows, deps: ThreadPersistDeps = DEFAULT_DEPS): Promise<void> {
@@ -32,4 +34,8 @@ export async function persistThreads(rows: ThreadRows, deps: ThreadPersistDeps =
     .filter((p) => idByName.has(p.threadName))
     .map((p) => ({ threadId: idByName.get(p.threadName)!, period: p.period, intensity: p.intensity }));
   await deps.insertPoints(points);
+  const evidence = rows.evidence
+    .filter((e) => idByName.has(e.threadName))
+    .map((e) => ({ threadId: idByName.get(e.threadName)!, day: e.day, itemId: e.itemId }));
+  await deps.insertEvidence(evidence);
 }

@@ -1,15 +1,16 @@
 import { getDb } from '@/db/client';
-import { tifaMention, dailyInterpretation } from '@/db/schema';
+import { tifaMention, dailyInterpretation, item } from '@/db/schema';
 import { STREAM_COLORS } from '@/viz/palette';
 import { buildThreadInput, type Mention } from './aggregate';
 import { synthesizeThreads } from './synthesize';
-import { buildThreadRows } from './rows';
+import { buildThreadRows, type ThreadItem } from './rows';
 import { persistThreads } from './persist';
 import type { ThreadSet } from './schema';
 
 export interface ThreadRunDeps {
   loadMentions: () => Promise<Mention[]>;
   loadThreadLabels: () => Promise<string[]>;
+  loadItems: () => Promise<ThreadItem[]>;
   synthesize: (input: ReturnType<typeof buildThreadInput>) => Promise<ThreadSet>;
   persist: (rows: ReturnType<typeof buildThreadRows>) => Promise<void>;
 }
@@ -22,6 +23,7 @@ const DEFAULT_DEPS: ThreadRunDeps = {
     for (const r of rows) for (const s of ((r.topSignals as { thread?: string }[]) ?? [])) if (s.thread) labels.push(s.thread);
     return labels;
   },
+  loadItems: async () => await getDb().select({ id: item.id, day: item.day, title: item.title, summary: item.summary }).from(item) as ThreadItem[],
   synthesize: (input) => synthesizeThreads(input),
   persist: (rows) => persistThreads(rows),
 };
@@ -31,7 +33,8 @@ export async function synthesizeAllThreads(deps: ThreadRunDeps = DEFAULT_DEPS): 
   if (!mentions.length) throw new Error('no mentions to cluster into threads');
   const input = buildThreadInput(mentions, await deps.loadThreadLabels());
   const set = await deps.synthesize(input);
-  const rows = buildThreadRows(set, mentions, STREAM_COLORS);
+  const items = await deps.loadItems();
+  const rows = buildThreadRows(set, mentions, STREAM_COLORS, items);
   await deps.persist(rows);
   return { threadCount: set.threads.length };
 }
