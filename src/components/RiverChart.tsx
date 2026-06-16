@@ -144,6 +144,29 @@ export default function RiverChart({ series, showReadout = true, currentDate }: 
         />
       </svg>
 
+      {/* Scrubber 日期标签（条形态：跟随扫描位置显示当前/目标日期） */}
+      {!showReadout && hoverPeriod && (
+        <div
+          style={{
+            position: 'absolute',
+            left: `${(scrubberX / SVG_W) * 100}%`,
+            top: 6,
+            transform: 'translateX(-50%)',
+            background: 'rgba(6,10,16,0.85)',
+            border: '1px solid rgba(255,255,255,0.18)',
+            borderRadius: 6,
+            padding: '2px 8px',
+            fontSize: 11,
+            color: '#ECEAE3',
+            fontVariantNumeric: 'tabular-nums',
+            whiteSpace: 'nowrap',
+            pointerEvents: 'none',
+          }}
+        >
+          {hoverPeriod}
+        </div>
+      )}
+
       {/* Readout panel */}
       {showReadout && (
       <div

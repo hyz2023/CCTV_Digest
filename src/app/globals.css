@@ -35,7 +35,7 @@ body {
   to { opacity: 1; transform: none; }
 }
 .rise-in {
-  animation: riseIn 0.5s cubic-bezier(0.22, 1, 0.36, 1) both;
+  animation: riseIn 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 @media (prefers-reduced-motion: reduce) {
   .rise-in { animation: none; }
@@ -43,11 +43,16 @@ body {
 
 /* 河流条 opacity 入场（不加位移，避免与 view-transition 形变冲突） */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.fade-in { animation: fadeIn 0.5s ease both; }
+.fade-in { animation: fadeIn 0.8s ease both; }
 @media (prefers-reduced-motion: reduce) { .fade-in { animation: none; } }
 
-/* 河流命名形变（首页全屏 ↔ 当日页顶部条），仅支持的浏览器生效 */
+/* 河流命名形变（首页全屏 ↔ 当日页顶部条），仅支持的浏览器生效。
+   放慢到 1s，让"压缩成顶部条"的过程肉眼看得清。 */
 ::view-transition-group(river-stream) {
-  animation-duration: 0.6s;
+  animation-duration: 1s;
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+/* 其余内容的整体交叉淡入也放慢，避免一闪而过 */
+::view-transition-old(root), ::view-transition-new(root) {
+  animation-duration: 0.6s;
 }
