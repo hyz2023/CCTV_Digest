@@ -1,6 +1,6 @@
 import type { CrossSection } from '@/viz/series';
 import type { DayItem, Signal, RadarView } from '@/data/queries';
-import { radarLabel, radarIcon } from '@/data/labels';
+import { radarLabel, radarIcon, radarStyle } from '@/data/labels';
 import SignalCard from '@/components/SignalCard';
 import RiverChart from '@/components/RiverChart';
 import type { StreamSeries } from '@/viz/series';
@@ -41,6 +41,10 @@ export default function DailyRead({ date, crossSection, items, signals, radar, r
   }
 
   const maxVal = Math.max(1, ...crossSection.entries.map((e) => e.value));
+  const maxMagnitude = Math.max(
+    1,
+    ...radar.filter((r) => r.magnitude != null).map((r) => r.magnitude as number),
+  );
 
   return (
     <main style={{ minHeight: '100vh', background: '#08080e', color: '#ECE7DD' }}>
@@ -108,16 +112,71 @@ export default function DailyRead({ date, crossSection, items, signals, radar, r
           {radar.length === 0 ? (
             <p style={{ color: '#6b6b78', fontSize: 13 }}>今日无显著雷达变化（相对 90 天基线）。</p>
           ) : (
-            <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-              {radar.map((r, i) => (
-                <div key={i} style={{ display: 'flex', alignItems: 'baseline', gap: 10, fontSize: 14 }}>
-                  <span style={{ color: '#c99', minWidth: 96, fontSize: 12 }}>{radarIcon(r.type)} {radarLabel(r.type)}</span>
-                  <span style={{ color: '#ECE7DD' }}>{r.target}</span>
-                  {r.magnitude != null ? (
-                    <span style={{ color: '#6b6b78', fontSize: 12 }}>强度 {Number(r.magnitude).toFixed(r.magnitude % 1 ? 2 : 0)}</span>
-                  ) : null}
-                </div>
-              ))}
+            <div style={{ border: '1px solid #1b1b26', borderRadius: 6, overflow: 'hidden' }}>
+              {radar.map((r, i) => {
+                const s = radarStyle(r.type);
+                return (
+                  <div
+                    key={i}
+                    style={{
+                      display: 'flex',
+                      alignItems: 'stretch',
+                      borderBottom: i < radar.length - 1 ? '1px solid #1b1b26' : 'none',
+                    }}
+                  >
+                    <div
+                      style={{
+                        width: 56,
+                        flexShrink: 0,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        padding: '14px 0',
+                        background: s.colBg,
+                        borderRight: `1px solid ${s.colBorder}`,
+                      }}
+                    >
+                      <span style={{ fontSize: 20, lineHeight: 1, color: s.fg }}>{radarIcon(r.type)}</span>
+                      <span style={{ fontSize: 8, color: s.fg, letterSpacing: 0.5, marginTop: 4 }}>{s.short}</span>
+                    </div>
+                    <div
+                      style={{
+                        padding: '11px 16px',
+                        flex: 1,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      <span style={{ fontSize: 15, fontWeight: 700, color: '#ECE7DD', lineHeight: 1.3 }}>
+                        {r.target}
+                      </span>
+                      {r.magnitude != null ? (
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, marginTop: 5 }}>
+                          <div style={{ width: 72, height: 2, background: s.trackBg, borderRadius: 1 }}>
+                            <div
+                              style={{
+                                width: `${(r.magnitude / maxMagnitude) * 100}%`,
+                                height: '100%',
+                                background: s.fg,
+                                borderRadius: 1,
+                              }}
+                            />
+                          </div>
+                          <span style={{ fontSize: 10, color: s.fg }}>
+                            {Number(r.magnitude).toFixed(1)}
+                          </span>
+                        </div>
+                      ) : (
+                        <span style={{ fontSize: 10, color: '#4a4a5a', marginTop: 3 }}>
+                          {radarLabel(r.type)}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+                );
+              })}
             </div>
           )}
         </section>
